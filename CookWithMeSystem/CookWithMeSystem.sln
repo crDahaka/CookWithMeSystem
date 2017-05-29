@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookWithMeSystem.Models", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookWithMe.API", "Server\CookWithMe.API\CookWithMe.API.csproj", "{8CB2B3AD-428C-4163-8929-9B44B7B3948A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{40B8570F-7C57-4E66-A94D-A62A4255BF94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookWithMeSystem.Services", "Services\CookWithMeSystem.Services\CookWithMeSystem.Services.csproj", "{C433E4FF-2389-47FA-8A28-30B0BCC431A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookWithMeSystem.Common", "CookWithMeSystem.Common\CookWithMeSystem.Common.csproj", "{30FA3922-8B07-4051-8791-870A0F3B7162}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +37,14 @@ Global
 		{8CB2B3AD-428C-4163-8929-9B44B7B3948A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CB2B3AD-428C-4163-8929-9B44B7B3948A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CB2B3AD-428C-4163-8929-9B44B7B3948A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C433E4FF-2389-47FA-8A28-30B0BCC431A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C433E4FF-2389-47FA-8A28-30B0BCC431A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C433E4FF-2389-47FA-8A28-30B0BCC431A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C433E4FF-2389-47FA-8A28-30B0BCC431A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30FA3922-8B07-4051-8791-870A0F3B7162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30FA3922-8B07-4051-8791-870A0F3B7162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30FA3922-8B07-4051-8791-870A0F3B7162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30FA3922-8B07-4051-8791-870A0F3B7162}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,5 +53,6 @@ Global
 		{E134DAB4-219C-4826-8CEC-5F8FD3DC9B44} = {C022065B-BDD9-4AEF-A27E-9D70FF69D3BA}
 		{50CADC8B-7A4E-43C0-8966-99855F815420} = {C022065B-BDD9-4AEF-A27E-9D70FF69D3BA}
 		{8CB2B3AD-428C-4163-8929-9B44B7B3948A} = {6756ADE5-4AAD-4296-84CB-A0A978822F84}
+		{C433E4FF-2389-47FA-8A28-30B0BCC431A3} = {40B8570F-7C57-4E66-A94D-A62A4255BF94}
 	EndGlobalSection
 EndGlobal
