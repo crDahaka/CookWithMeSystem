@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CookWithMe.API.Models
+﻿namespace CookWithMe.API.Models.Account
 {
+    using System;
+    using System.Collections.Generic;
+
     // Models returned by AccountController actions.
 
     public class ExternalLoginViewModel
