@@ -5,6 +5,7 @@
     using CookWithMeSystem.Models;
     using CookWithMeSystem.Services.Contracts;
     using CookWithMeSystem.Data;
+    using CookWithMeSystem.Common.Constants;
 
     public class RecipeService : IRecipeService
     {
@@ -32,7 +33,7 @@
             return newRecipe.Id;
         }
 
-        public IQueryable<Recipe> All(int page = 1, int pageSize = 10)
+        public IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {
             return this.recipes
                 .All()

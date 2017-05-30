@@ -58,6 +58,10 @@
     <Compile Include="RecipeService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CookWithMeSystem.Common\CookWithMeSystem.Common.csproj">
+      <Project>{30FA3922-8B07-4051-8791-870A0F3B7162}</Project>
+      <Name>CookWithMeSystem.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Data\CookWithMeSystem.Data\CookWithMeSystem.Data.csproj">
       <Project>{E134DAB4-219C-4826-8CEC-5F8FD3DC9B44}</Project>
       <Name>CookWithMeSystem.Data</Name>

@@ -1,6 +1,7 @@
 ﻿namespace CookWithMe.API.Controllers
 {
     using CookWithMe.API.Models.Recipes;
+    using CookWithMeSystem.Common.Constants;
     using CookWithMeSystem.Services.Contracts;
 
     using System.Linq;
@@ -14,10 +15,9 @@
         {
             this.recipes = recipeService;
         }
-        
 
         [Route("api/recipes/all")]
-        public IHttpActionResult Get(int page, int pageSize = 10)
+        public IHttpActionResult Get(int page, int pageSize = GlobalConstants.DefaultPageSize)
         {
             var result = this.recipes
                 .All()
