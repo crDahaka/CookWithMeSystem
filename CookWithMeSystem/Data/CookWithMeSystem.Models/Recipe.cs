@@ -30,7 +30,7 @@
             this.ingredients = new HashSet<Ingredient>();
         }
 
-        public ICollection<Ingredient> Ingredients
+        public virtual ICollection<Ingredient> Ingredients
         {
             get { return this.ingredients; }
             set { this.ingredients = value; }
