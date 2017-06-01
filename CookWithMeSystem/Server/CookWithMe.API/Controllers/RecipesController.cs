@@ -1,6 +1,7 @@
 ﻿namespace CookWithMe.API.Controllers
 {
     using AutoMapper.QueryableExtensions;
+
     using CookWithMe.API.Models.Recipes;
     using CookWithMeSystem.Common.Constants;
     using CookWithMeSystem.Services.Contracts;
@@ -21,8 +22,7 @@
         {
             var result = this.recipes
                 .All(page: 1)
-                .Project()
-                .To<RecipeResponseModel>()
+                .ProjectTo<RecipeResponseModel>()
                 .ToList();
 
             return this.Ok(result);
@@ -33,8 +33,7 @@
         {
             var result = this.recipes
                 .All(page, pageSize)
-                .Project()
-                .To<RecipeResponseModel>()
+                .ProjectTo<RecipeResponseModel>()
                 .ToList();
 
             return this.Ok(result);
