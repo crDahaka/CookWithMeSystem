@@ -5,7 +5,7 @@
     using CookWithMe.API.Models.Recipes;
     using CookWithMeSystem.Common.Constants;
     using CookWithMeSystem.Services.Contracts;
-
+    using Microsoft.AspNet.Identity;
     using System.Linq;
     using System.Web.Http;
 
@@ -39,6 +39,7 @@
             return this.Ok(result);
         }
 
+        [Authorize]
         [Route("api/recipe/add")]
         public IHttpActionResult Post(SaveRecipeRequestModel model)
         {
@@ -51,7 +52,9 @@
                 model.Title,
                 model.EstimationTime,
                 model.Preparation,
+                this.User.Identity.GetUserId(),
                 model.IsPrivate);
+
             
             return this.Ok(createdRecipeId);
         }

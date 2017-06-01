@@ -9,23 +9,35 @@
 
     public class RecipeService : IRecipeService
     {
-
         private readonly IRepository<Recipe> recipes;
+        private readonly IRepository<User> users;
 
-        public RecipeService(IRepository<Recipe> recipesRepo)
+        public RecipeService(IRepository<Recipe> recipesRepo, IRepository<User> usersRepo)
         {
             this.recipes = recipesRepo;
+            this.users = usersRepo;
         }
 
-        public int Add(string title, int estimationTime, string preparation, bool isPrivate = false)
+        public int Add(string title, int estimationTime, string preparation, string publisherId, bool isPrivate = false)
         {
+            //var currentUser = this.users
+            //    .All()
+            //    .FirstOrDefault(u => u.UserName == publisher);
+
+            var currentUser = this.users
+                .All()
+                .FirstOrDefault(u => u.Id == publisherId);
+
             var newRecipe = new Recipe
             {
                 Title = title,
                 EstimationTime = estimationTime,
                 Preparation = preparation,
+                PublisherId = currentUser.Id,
                 IsPrivate = isPrivate
             };
+
+            //newRecipe.Publisher = currentUser;
 
             this.recipes.Add(newRecipe);
             this.recipes.SaveChanges();
