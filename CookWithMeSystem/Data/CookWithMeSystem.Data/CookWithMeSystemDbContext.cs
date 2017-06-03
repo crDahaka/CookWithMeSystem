@@ -17,6 +17,8 @@
 
         public virtual IDbSet<Comment> Comments { get; set; }
 
+        public virtual IDbSet<Image> Images { get; set; }
+
         public static CookWithMeSystemDbContext Create()
         {
             return new CookWithMeSystemDbContext();

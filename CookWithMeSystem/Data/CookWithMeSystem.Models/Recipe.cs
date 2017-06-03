@@ -22,6 +22,8 @@
 
         public virtual User Publisher { get; set; }
 
+        public virtual Image Image { get; set; }
+
         public bool IsPrivate { get; set; }
 
         public Recipe()
