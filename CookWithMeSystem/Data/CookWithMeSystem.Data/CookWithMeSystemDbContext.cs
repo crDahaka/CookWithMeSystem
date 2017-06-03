@@ -21,6 +21,8 @@
 
         public virtual IDbSet<Category> Categories { get; set; }
 
+        public virtual IDbSet<Vote> Votes { get; set; }
+
         public static CookWithMeSystemDbContext Create()
         {
             return new CookWithMeSystemDbContext();

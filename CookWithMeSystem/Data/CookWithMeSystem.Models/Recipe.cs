@@ -9,6 +9,7 @@
     {
         private ICollection<Ingredient> ingredients;
         private ICollection<Comment> comments;
+        private ICollection<Vote> votes;
         
         [StringLength(ValidationConstants.MaxRecipeTitle)]
         public string Title { get; set; }
@@ -36,6 +37,7 @@
         {
             this.ingredients = new HashSet<Ingredient>();
             this.comments = new HashSet<Comment>();
+            this.votes = new HashSet<Vote>();
         }
 
         public virtual ICollection<Ingredient> Ingredients
@@ -48,6 +50,12 @@
         {
             get { return this.comments; }
             set { this.comments = value; }
+        }
+
+        public virtual ICollection<Vote> Votes
+        {
+            get { return this.votes; }
+            set { this.votes = value; }
         }
 
     }
