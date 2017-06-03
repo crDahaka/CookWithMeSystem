@@ -13,5 +13,7 @@
         public const int MaxIngredientName = 50;
 
         public const int MaxCommentContent = 1000;
+
+        public const int MaxCategoryName = 50;
     }
 }

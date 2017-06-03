@@ -10,7 +10,7 @@
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
+        
         public virtual IDbSet<Recipe> Recipes { get; set; }
 
         public virtual IDbSet<Ingredient> Ingredients { get; set; }
@@ -18,6 +18,8 @@
         public virtual IDbSet<Comment> Comments { get; set; }
 
         public virtual IDbSet<Image> Images { get; set; }
+
+        public virtual IDbSet<Category> Categories { get; set; }
 
         public static CookWithMeSystemDbContext Create()
         {

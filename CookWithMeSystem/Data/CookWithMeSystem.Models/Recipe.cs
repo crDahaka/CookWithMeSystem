@@ -22,7 +22,13 @@
 
         public virtual User Publisher { get; set; }
 
+        public int? ImageId { get; set; }
+
         public virtual Image Image { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
 
         public bool IsPrivate { get; set; }
 
