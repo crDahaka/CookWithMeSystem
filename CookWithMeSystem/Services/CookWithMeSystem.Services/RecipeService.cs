@@ -20,10 +20,6 @@
 
         public int Add(string title, int estimationTime, string preparation, string publisherId, bool isPrivate = false)
         {
-            //var currentUser = this.users
-            //    .All()
-            //    .FirstOrDefault(u => u.UserName == publisher);
-
             var currentUser = this.users
                 .All()
                 .FirstOrDefault(u => u.Id == publisherId);
@@ -36,9 +32,7 @@
                 PublisherId = currentUser.Id,
                 IsPrivate = isPrivate
             };
-
-            //newRecipe.Publisher = currentUser;
-
+            
             this.recipes.Add(newRecipe);
             this.recipes.SaveChanges();
 
@@ -49,7 +43,7 @@
         {
             return this.recipes
                 .All()
-                .OrderByDescending(r => r.CreationDate)
+                .OrderByDescending(r => r.Title)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
         }

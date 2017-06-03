@@ -1,6 +1,7 @@
 ﻿namespace CookWithMeSystem.Data
 {
     using CookWithMeSystem.Models;
+
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
 
@@ -9,6 +10,8 @@
         IDbSet<Recipe> Recipes { get; set; }
 
         IDbSet<Ingredient> Ingredients { get; set; }
+
+        IDbSet<Comment> Comments { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 

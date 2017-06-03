@@ -2,8 +2,16 @@
 {
     public class ValidationConstants
     {
-        public const int MaxProjectTitle = 50;
+        public const int MaxFirstName = 50;
 
-        public const int MaxProjectPreparation = 1000;
+        public const int MaxLastName = 50;
+
+        public const int MaxRecipeTitle = 50;
+
+        public const int MaxRecipePreparation = 1000;
+
+        public const int MaxIngredientName = 50;
+
+        public const int MaxCommentContent = 1000;
     }
 }

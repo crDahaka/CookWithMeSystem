@@ -1,12 +1,12 @@
 ﻿namespace CookWithMeSystem.Models
 {
+    using CookWithMeSystem.Common.Constants;
+
     using System.ComponentModel.DataAnnotations;
 
-    public class Ingredient
+    public class Ingredient : BaseEntity
     {
-        public int Id { get; set; }
-
-        [StringLength(25)]
+        [StringLength(ValidationConstants.MaxIngredientName)]
         public string Name { get; set; }
 
         public virtual Recipe Recipe { get; set; }
