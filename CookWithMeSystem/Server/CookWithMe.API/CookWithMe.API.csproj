@@ -226,8 +226,9 @@
     </Compile>
     <Compile Include="Infrastructure\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\IMapFrom.cs" />
-    <Compile Include="Models\Account\AccountBindingModels.cs" />
-    <Compile Include="Models\Account\AccountViewModels.cs" />
+    <Compile Include="Models\Account\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\Account\RegisterViewModel.cs" />
+    <Compile Include="Models\Account\SetPasswordViewModel.cs" />
     <Compile Include="Models\Ingredients\IngredientViewModel.cs" />
     <Compile Include="Models\Recipes\RecipeResponseModel.cs" />
     <Compile Include="Models\Recipes\SaveRecipeRequestModel.cs" />

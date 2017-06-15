@@ -8,6 +8,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
+
     using CookWithMeSystem.Models;
     using CookWithMe.API.Models.Account;
 
@@ -37,7 +38,7 @@
         [HttpPost]
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid || model == null)
             {
@@ -57,7 +58,7 @@
         }
 
         [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +77,7 @@
         }
         
         [Route("SetPassword")]
-        public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
+        public async Task<IHttpActionResult> SetPassword(SetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
