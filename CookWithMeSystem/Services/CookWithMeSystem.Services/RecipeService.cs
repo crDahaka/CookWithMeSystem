@@ -6,23 +6,24 @@
     using CookWithMeSystem.Services.Contracts;
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Common.Constants;
+    using System.Collections.Generic;
 
     public class RecipeService : IRecipeService
     {
         private readonly IRepository<Recipe> recipes;
         private readonly IRepository<User> users;
+        private readonly IRepository<Ingredient> ingredients;
 
-        public RecipeService(IRepository<Recipe> recipesRepo, IRepository<User> usersRepo)
+        public RecipeService(IRepository<Recipe> recipesRepo, IRepository<User> usersRepo, IRepository<Ingredient> ingredientsRepo)
         {
             this.recipes = recipesRepo;
             this.users = usersRepo;
+            this.ingredients = ingredientsRepo;
         }
 
-        public int Add(string title, int estimationTime, string preparation, string publisherId, bool isPrivate = false)
+        public int Add(string title, int estimationTime, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
         {
-            var currentUser = this.users
-                .All()
-                .FirstOrDefault(u => u.Id == publisherId);
+            var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
 
             var newRecipe = new Recipe
             {
@@ -30,8 +31,15 @@
                 EstimationTime = estimationTime,
                 Preparation = preparation,
                 PublisherId = currentUser.Id,
+                Ingredients = ingredients,
                 IsPrivate = isPrivate
             };
+
+            foreach (Ingredient ingredient in ingredients)
+            {
+                this.ingredients.Add(ingredient);
+                ingredient.Recipe = newRecipe;
+            }
             
             this.recipes.Add(newRecipe);
             this.recipes.SaveChanges();

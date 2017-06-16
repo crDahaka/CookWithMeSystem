@@ -17,7 +17,7 @@
         
         [StringLength(ValidationConstants.MaxFirstName)]
         public string FirstName { get; set; }
-
+        
         [StringLength(ValidationConstants.MaxLastName)]
         public string LastName { get; set; }
 

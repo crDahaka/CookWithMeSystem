@@ -1,7 +1,7 @@
 ﻿namespace CookWithMe.API.Controllers
 {
     using AutoMapper.QueryableExtensions;
-
+    using CookWithMe.API.Infrastructure.ValidationAttributes;
     using CookWithMe.API.Models.Recipes;
     using CookWithMeSystem.Common.Constants;
     using CookWithMeSystem.Services.Contracts;
@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Web.Http;
 
+    [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
     {
         private readonly IRecipeService recipes;
@@ -18,7 +19,7 @@
             this.recipes = recipeService;
         }
 
-        public IHttpActionResult Get()
+        public IHttpActionResult GetAllRecipes()
         {
             var result = this.recipes
                 .All(page: 1)
@@ -28,8 +29,8 @@
             return this.Ok(result);
         }
 
-        [Route("api/recipes/all")]
-        public IHttpActionResult Get(int page, int pageSize = GlobalConstants.DefaultPageSize)
+        [Route("all")]
+        public IHttpActionResult GetAllRecipes (int page, int pageSize = GlobalConstants.DefaultPageSize)
         {
             var result = this.recipes
                 .All(page, pageSize)
@@ -40,12 +41,13 @@
         }
 
         [Authorize]
-        [Route("api/recipe/add")]
-        public IHttpActionResult Post(SaveRecipeRequestModel model)
+        [ValidationModelState]
+        [Route("create")]
+        public IHttpActionResult CreateRecipe(SaveRecipeRequestModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(this.ModelState);
+                return this.BadRequest("Invalid Model");
             }
 
             var createdRecipeId = this.recipes.Add(
@@ -53,6 +55,7 @@
                 model.EstimationTime,
                 model.Preparation,
                 this.User.Identity.GetUserId(),
+                model.Ingredients,
                 model.IsPrivate);
 
             

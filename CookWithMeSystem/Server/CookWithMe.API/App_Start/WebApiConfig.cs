@@ -2,6 +2,7 @@
 {
     using System.Web.Http;
     using Microsoft.Owin.Security.OAuth;
+    using CookWithMe.API.Infrastructure.ValidationAttributes;
 
     public static class WebApiConfig
     {

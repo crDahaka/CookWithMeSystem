@@ -2,6 +2,8 @@
 {
     public class ValidationConstants
     {
+        public const int MinPassword = 6;
+
         public const int MaxFirstName = 50;
 
         public const int MaxLastName = 50;
@@ -15,5 +17,6 @@
         public const int MaxCommentContent = 1000;
 
         public const int MaxCategoryName = 50;
+
     }
 }

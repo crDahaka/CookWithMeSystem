@@ -226,6 +226,10 @@
     </Compile>
     <Compile Include="Infrastructure\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\IMapFrom.cs" />
+    <Compile Include="Infrastructure\ValidationAttributes\CheckModelForNullAttribute.cs" />
+    <Compile Include="Infrastructure\ValidationAttributes\ProcessExceptionFilterAttribute.cs" />
+    <Compile Include="Infrastructure\ValidationAttributes\ProcessException.cs" />
+    <Compile Include="Infrastructure\ValidationAttributes\ValidationModelStateAttribute.cs" />
     <Compile Include="Models\Account\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\Account\SetPasswordViewModel.cs" />

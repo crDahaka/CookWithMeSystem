@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
+
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
@@ -11,11 +12,13 @@
 
     using CookWithMeSystem.Models;
     using CookWithMe.API.Models.Account;
+    using CookWithMe.API.Infrastructure.ValidationAttributes;
 
     [Authorize]
-    [RoutePrefix("api/Account")]
+    [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
+        private IAuthenticationManager Authentication { get { return Request.GetOwinContext().Authentication; } }
         private ApplicationUserManager userManager;
 
         public AccountController()
@@ -37,70 +40,65 @@
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("Register")]
+        [ValidationModelState]
+        [Route("register")]
         public async Task<IHttpActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid || model == null)
             {
-                return BadRequest("Invalid model.");
+                return BadRequest("Invalid model state.");
             }
 
-            var user = new User() { UserName = model.Email, Email = model.Email };
-
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
+            var newUser = new User
             {
-                return GetErrorResult(result);
-            }
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = model.Email,
+                Email = model.Email
+            };
 
-            return Ok();
-        }
-
-        [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-                model.NewPassword);
+            IdentityResult registerOperation = await UserManager.CreateAsync(newUser, model.Password);
             
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
-        }
-        
-        [Route("SetPassword")]
-        public async Task<IHttpActionResult> SetPassword(SetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
             return Ok();
         }
 
-        [Route("Logout")]
+        [Route("logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();
         }
 
+        [HttpPut]
+        [ValidationModelState]
+        [Route("changePassword")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid || model == null)
+            {
+                return BadRequest("Invalid model state.");
+            }
+
+            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            
+            return Ok();
+        }
+        
+        [HttpPost]
+        [ValidationModelState]
+        [Route("setPassword")]
+        public async Task<IHttpActionResult> SetPassword(SetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid || model == null)
+            {
+                return BadRequest("Invalid model state.");
+            }
+
+            IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+            
+            return Ok();
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing && userManager != null)
@@ -111,40 +109,6 @@
 
             base.Dispose(disposing);
         }
-
-        private IAuthenticationManager Authentication
-        {
-            get { return Request.GetOwinContext().Authentication; }
-        }
-
-        private IHttpActionResult GetErrorResult(IdentityResult result)
-        {
-            if (result == null)
-            {
-                return InternalServerError();
-            }
-
-            if (!result.Succeeded)
-            {
-                if (result.Errors != null)
-                {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
-            }
-
-            return null;
-        }
-
+        
     }
 }
