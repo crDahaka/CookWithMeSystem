@@ -6,6 +6,7 @@
 
     public class Ingredient : BaseEntity
     {
+        [Required]
         [StringLength(ValidationConstants.MaxIngredientName)]
         public string Name { get; set; }
 
