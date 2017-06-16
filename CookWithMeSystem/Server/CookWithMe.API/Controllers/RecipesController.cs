@@ -45,7 +45,7 @@
         [Route("create")]
         public IHttpActionResult CreateRecipe(SaveRecipeRequestModel model)
         {
-            if (!this.ModelState.IsValid)
+            if (!this.ModelState.IsValid || model == null)
             {
                 return this.BadRequest("Invalid Model");
             }

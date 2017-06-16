@@ -7,6 +7,7 @@
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
+    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -37,6 +38,11 @@
 
             foreach (Ingredient ingredient in ingredients)
             {
+                if (string.IsNullOrEmpty(ingredient.Name) || string.IsNullOrWhiteSpace(ingredient.Name))
+                {
+                    throw new ArgumentNullException("Ingredient name cannot be empty.");
+                }
+
                 this.ingredients.Add(ingredient);
                 ingredient.Recipe = newRecipe;
             }

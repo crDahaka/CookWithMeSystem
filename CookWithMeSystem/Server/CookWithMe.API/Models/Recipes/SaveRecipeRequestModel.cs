@@ -4,11 +4,9 @@
     using CookWithMeSystem.Models;
 
     using System.ComponentModel.DataAnnotations;
-    using AutoMapper;
-    using CookWithMe.API.Models.Ingredients;
     using System.Collections.Generic;
 
-    public class SaveRecipeRequestModel : IMapFrom<Recipe>, IHaveCustomMappings
+    public class SaveRecipeRequestModel : IMapFrom<Recipe>
     {
         [Required]
         public string Title { get; set; }
@@ -25,10 +23,5 @@
         [Required]
         public ICollection<Ingredient> Ingredients { get; set; }
         
-        public void CreateMappings(IConfiguration config)
-        {
-            config.CreateMap<Recipe, RecipeResponseModel>()
-                .ForMember(r => r.Ingredients, opt => opt.MapFrom(i => i.Ingredients));
-        }
     }
 }

@@ -46,7 +46,7 @@
         {
             if (!ModelState.IsValid || model == null)
             {
-                return BadRequest("Invalid model state.");
+                return BadRequest("Invalid model body.");
             }
 
             var newUser = new User
