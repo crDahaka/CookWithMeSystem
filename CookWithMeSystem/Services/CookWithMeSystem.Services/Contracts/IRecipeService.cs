@@ -9,6 +9,7 @@
     {
         IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize);
 
-        int Add(string title, int estimationTime, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false);
+        void Add(string title, int estimationTime, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false);
+        
     }
 }

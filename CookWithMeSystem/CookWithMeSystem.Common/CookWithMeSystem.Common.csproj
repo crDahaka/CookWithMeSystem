@@ -43,6 +43,8 @@
     <Compile Include="Constants\Assemblies.cs" />
     <Compile Include="Constants\GlobalConstants.cs" />
     <Compile Include="Constants\ValidationConstants.cs" />
+    <Compile Include="Generator\IRandomGenerator.cs" />
+    <Compile Include="Generator\RandomGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

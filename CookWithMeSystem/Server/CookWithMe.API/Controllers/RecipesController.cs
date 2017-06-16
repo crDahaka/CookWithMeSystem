@@ -50,16 +50,14 @@
                 return this.BadRequest("Invalid Model");
             }
 
-            var createdRecipeId = this.recipes.Add(
-                model.Title,
-                model.EstimationTime,
-                model.Preparation,
-                this.User.Identity.GetUserId(),
-                model.Ingredients,
-                model.IsPrivate);
+            if (User.Identity.GetUserId() == null)
+            {
+                throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
+            }
 
+            this.recipes.Add(model.Title, model.EstimationTime,model.Preparation,User.Identity.GetUserId(), model.Ingredients, model.IsPrivate);
             
-            return this.Ok(createdRecipeId);
+            return this.Ok();
         }
     }
 }

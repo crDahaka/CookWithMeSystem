@@ -65,6 +65,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CookWithMeSystem.Common\CookWithMeSystem.Common.csproj">
+      <Project>{30FA3922-8B07-4051-8791-870A0F3B7162}</Project>
+      <Name>CookWithMeSystem.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CookWithMeSystem.Models\CookWithMeSystem.Models.csproj">
       <Project>{50CADC8B-7A4E-43C0-8966-99855F815420}</Project>
       <Name>CookWithMeSystem.Models</Name>

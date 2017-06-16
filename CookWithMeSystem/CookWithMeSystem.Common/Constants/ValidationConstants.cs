@@ -4,6 +4,10 @@
     {
         public const int MinPassword = 6;
 
+        public const int MinRecipeTitle = 3;
+
+        public const int MinRecipePreparation = 25;
+
         public const int MaxFirstName = 50;
 
         public const int MaxLastName = 50;

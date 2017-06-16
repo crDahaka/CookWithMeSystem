@@ -22,10 +22,10 @@
             this.ingredients = ingredientsRepo;
         }
 
-        public int Add(string title, int estimationTime, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
+        public void Add(string title, int estimationTime, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
         {
             var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
-
+            
             var newRecipe = new Recipe
             {
                 Title = title,
@@ -49,8 +49,6 @@
             
             this.recipes.Add(newRecipe);
             this.recipes.SaveChanges();
-
-            return newRecipe.Id;
         }
 
         public IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
