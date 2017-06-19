@@ -12,10 +12,7 @@
         [Required]
         [StringLength(ValidationConstants.MaxRecipeTitle, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeTitle)]
         public string Title { get; set; }
-
-        [Required]
-        public int EstimationTime { get; set; }
-
+        
         [Required]
         [StringLength(ValidationConstants.MaxRecipePreparation, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipePreparation)]
         public string Preparation { get; set; }

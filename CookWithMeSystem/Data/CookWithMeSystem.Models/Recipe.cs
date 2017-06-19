@@ -8,6 +8,7 @@
     public class Recipe : BaseEntity
     {
         private ICollection<Ingredient> ingredients;
+        private ICollection<Step> steps;
         private ICollection<Comment> comments;
         private ICollection<Vote> votes;
         
@@ -17,17 +18,15 @@
         [StringLength(ValidationConstants.MaxRecipePreparation)]
         public string Preparation { get; set; }
 
-        public int EstimationTime { get; set; }
-
-        public string PublisherId { get; set; }
+        public string PublisherID { get; set; }
 
         public virtual User Publisher { get; set; }
 
-        public int? ImageId { get; set; }
+        public int? ImageID { get; set; }
 
         public virtual Image Image { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int? CategoryID { get; set; }
 
         public virtual Category Category { get; set; }
 
@@ -36,6 +35,7 @@
         public Recipe()
         {
             this.ingredients = new HashSet<Ingredient>();
+            this.steps = new HashSet<Step>();
             this.comments = new HashSet<Comment>();
             this.votes = new HashSet<Vote>();
         }
@@ -44,6 +44,12 @@
         {
             get { return this.ingredients; }
             set { this.ingredients = value; }
+        }
+
+        public virtual ICollection<Step> Steps
+        {
+            get { return this.steps; }
+            set { this.steps = value; }
         }
 
         public virtual ICollection<Comment> Comments

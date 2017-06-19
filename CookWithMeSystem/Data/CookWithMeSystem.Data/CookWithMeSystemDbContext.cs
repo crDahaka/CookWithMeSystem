@@ -15,6 +15,8 @@
 
         public virtual IDbSet<Ingredient> Ingredients { get; set; }
 
+        public virtual IDbSet<Step> Steps { get; set; }
+
         public virtual IDbSet<Comment> Comments { get; set; }
 
         public virtual IDbSet<Image> Images { get; set; }

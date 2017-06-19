@@ -7,7 +7,6 @@
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
-    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -22,16 +21,15 @@
             this.ingredients = ingredientsRepo;
         }
 
-        public void Add(string title, int estimationTime, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
+        public void Add(string title, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
         {
             var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
             
             var newRecipe = new Recipe
             {
                 Title = title,
-                EstimationTime = estimationTime,
                 Preparation = preparation,
-                PublisherId = currentUser.Id,
+                PublisherID = currentUser.Id,
                 Ingredients = ingredients,
                 IsPrivate = isPrivate
             };

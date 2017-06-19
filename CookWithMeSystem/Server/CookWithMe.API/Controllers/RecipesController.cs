@@ -29,6 +29,7 @@
             return this.Ok(result);
         }
 
+        [HttpGet]
         [Route("all")]
         public IHttpActionResult GetAllRecipes (int page, int pageSize = GlobalConstants.DefaultPageSize)
         {
@@ -41,6 +42,7 @@
         }
 
         [Authorize]
+        [HttpPost]
         [ValidationModelState]
         [Route("create")]
         public IHttpActionResult CreateRecipe(SaveRecipeRequestModel model)
@@ -55,7 +57,7 @@
                 throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
             }
 
-            this.recipes.Add(model.Title, model.EstimationTime,model.Preparation,User.Identity.GetUserId(), model.Ingredients, model.IsPrivate);
+            this.recipes.Add(model.Title, model.Preparation,User.Identity.GetUserId(), model.Ingredients, model.IsPrivate);
             
             return this.Ok();
         }

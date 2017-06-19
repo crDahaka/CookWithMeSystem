@@ -11,6 +11,8 @@
 
         IDbSet<Ingredient> Ingredients { get; set; }
 
+        IDbSet<Step> Steps { get; set; }
+
         IDbSet<Comment> Comments { get; set; }
 
         IDbSet<Image> Images { get; set; }
