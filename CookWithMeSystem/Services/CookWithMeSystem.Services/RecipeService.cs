@@ -50,5 +50,11 @@
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
         }
+
+        public void Delete(int id)
+        {
+            this.recipes.Delete(id);
+            this.recipes.SaveChanges();
+        }
     }
 }

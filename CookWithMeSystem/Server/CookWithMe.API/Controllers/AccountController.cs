@@ -42,7 +42,7 @@
         [AllowAnonymous]
         [ValidationModelState]
         [Route("register")]
-        public async Task<IHttpActionResult> Register(RegisterViewModel model)
+        public async Task<IHttpActionResult> Register([FromBody]RegisterViewModel model)
         {
             if (!ModelState.IsValid || model == null)
             {

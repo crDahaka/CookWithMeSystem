@@ -10,6 +10,7 @@
         IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize);
 
         void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, ICollection<Step> steps, bool isPrivate = false);
-        
+
+        void Delete(int id);
     }
 }

@@ -8,6 +8,8 @@
     using Microsoft.AspNet.Identity;
     using System.Linq;
     using System.Web.Http;
+    using System.Net;
+    using System.Data.Entity;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
@@ -45,7 +47,7 @@
         [HttpPost]
         [ValidationModelState]
         [Route("create")]
-        public IHttpActionResult CreateRecipe(SaveRecipeRequestModel model)
+        public IHttpActionResult CreateRecipe([FromBody]SaveRecipeRequestModel model)
         {
             if (!this.ModelState.IsValid || model == null)
             {
@@ -54,11 +56,20 @@
 
             if (User.Identity.GetUserId() == null)
             {
-                throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
             this.recipes.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
             
+            return this.Ok();
+        }
+
+        [HttpDelete]
+        [Route("delete/{id}")]
+        public IHttpActionResult DeleteRecipe(int id)
+        {
+            this.recipes.Delete(id);
+
             return this.Ok();
         }
     }

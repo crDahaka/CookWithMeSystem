@@ -1,9 +1,6 @@
 ﻿namespace CookWithMeSystem.Models
 {
-    using CookWithMeSystem.Common.Constants;
-
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
     public class Recipe : BaseEntity
     {
@@ -12,10 +9,8 @@
         private ICollection<Comment> comments;
         private ICollection<Vote> votes;
         
-        [StringLength(ValidationConstants.MaxRecipeTitle)]
         public string Title { get; set; }
         
-        [StringLength(ValidationConstants.MaxRecipeDescription)]
         public string Description { get; set; }
 
         public string PublisherID { get; set; }
