@@ -14,7 +14,7 @@
 
         public string Title { get; set; }
 
-        public string Preparation { get; set; }
+        public string Description { get; set; }
 
         public string Publisher { get; set; }
 

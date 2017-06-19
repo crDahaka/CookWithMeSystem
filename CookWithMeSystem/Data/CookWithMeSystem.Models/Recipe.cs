@@ -15,8 +15,8 @@
         [StringLength(ValidationConstants.MaxRecipeTitle)]
         public string Title { get; set; }
         
-        [StringLength(ValidationConstants.MaxRecipePreparation)]
-        public string Preparation { get; set; }
+        [StringLength(ValidationConstants.MaxRecipeDescription)]
+        public string Description { get; set; }
 
         public string PublisherID { get; set; }
 

@@ -14,8 +14,8 @@
         public string Title { get; set; }
         
         [Required]
-        [StringLength(ValidationConstants.MaxRecipePreparation, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipePreparation)]
-        public string Preparation { get; set; }
+        [StringLength(ValidationConstants.MaxRecipeDescription, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeDescription)]
+        public string Description { get; set; }
         
         [Required]
         public bool IsPrivate { get; set; }

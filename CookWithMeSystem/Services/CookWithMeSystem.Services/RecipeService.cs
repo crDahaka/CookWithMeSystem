@@ -21,14 +21,14 @@
             this.ingredients = ingredientsRepo;
         }
 
-        public void Add(string title, string preparation, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
+        public void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
         {
             var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
             
             var newRecipe = new Recipe
             {
                 Title = title,
-                Preparation = preparation,
+                Description = description,
                 PublisherID = currentUser.Id,
                 Ingredients = ingredients,
                 IsPrivate = isPrivate
