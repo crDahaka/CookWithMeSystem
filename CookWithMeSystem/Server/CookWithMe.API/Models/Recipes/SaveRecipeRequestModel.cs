@@ -22,6 +22,9 @@
 
         [Required]
         public ICollection<Ingredient> Ingredients { get; set; }
+
+        [Required]
+        public ICollection<Step> Steps { get; set; }
         
     }
 }

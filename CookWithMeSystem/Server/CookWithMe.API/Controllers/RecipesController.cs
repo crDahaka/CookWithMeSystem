@@ -57,7 +57,7 @@
                 throw new HttpResponseException(System.Net.HttpStatusCode.Unauthorized);
             }
 
-            this.recipes.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.IsPrivate);
+            this.recipes.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
             
             return this.Ok();
         }

@@ -13,15 +13,18 @@
         private readonly IRepository<Recipe> recipes;
         private readonly IRepository<User> users;
         private readonly IRepository<Ingredient> ingredients;
+        private readonly IRepository<Step> steps;
 
-        public RecipeService(IRepository<Recipe> recipesRepo, IRepository<User> usersRepo, IRepository<Ingredient> ingredientsRepo)
+        public RecipeService(
+            IRepository<Recipe> recipesRepo, IRepository<User> usersRepo, IRepository<Ingredient> ingredientsRepo, IRepository<Step> stepsRepo)
         {
             this.recipes = recipesRepo;
             this.users = usersRepo;
             this.ingredients = ingredientsRepo;
+            this.steps = stepsRepo;
         }
 
-        public void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, bool isPrivate = false)
+        public void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, ICollection<Step> steps, bool isPrivate = false)
         {
             var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
             
@@ -31,14 +34,9 @@
                 Description = description,
                 PublisherID = currentUser.Id,
                 Ingredients = ingredients,
+                Steps = steps,
                 IsPrivate = isPrivate
             };
-
-            foreach (Ingredient ingredient in ingredients)
-            {
-                this.ingredients.Add(ingredient);
-                ingredient.Recipe = newRecipe;
-            }
             
             this.recipes.Add(newRecipe);
             this.recipes.SaveChanges();
