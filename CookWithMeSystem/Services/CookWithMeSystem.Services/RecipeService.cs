@@ -7,6 +7,7 @@
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
+    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -53,8 +54,17 @@
 
         public void Delete(int id)
         {
-            this.recipes.Delete(id);
+            var recipe = this.GetById(id);
+
+            this.recipes.Delete(recipe);
             this.recipes.SaveChanges();
+        }
+
+        public Recipe GetById(int id)
+        {
+            var dbRecipe = this.recipes.GetById(id);
+
+            return dbRecipe;
         }
     }
 }

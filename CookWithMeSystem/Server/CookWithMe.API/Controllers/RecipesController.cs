@@ -10,6 +10,7 @@
     using System.Web.Http;
     using System.Net;
     using System.Data.Entity;
+    using System.Net.Http;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
@@ -68,6 +69,14 @@
         [Route("delete/{id}")]
         public IHttpActionResult DeleteRecipe(int id)
         {
+            var dbRecipe = this.recipes.GetById(id);
+
+            if (dbRecipe == null)
+            {
+                var message = string.Format("Recipe with id {0} not found", id);
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+            }
+
             this.recipes.Delete(id);
 
             return this.Ok();
