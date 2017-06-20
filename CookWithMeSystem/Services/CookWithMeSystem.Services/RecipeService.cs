@@ -1,13 +1,11 @@
 ﻿namespace CookWithMeSystem.Services
 {
     using System.Linq;
-
     using CookWithMeSystem.Models;
     using CookWithMeSystem.Services.Contracts;
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
-    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -23,6 +21,27 @@
             this.users = usersRepo;
             this.ingredients = ingredientsRepo;
             this.steps = stepsRepo;
+        }
+
+        public Recipe GetById(int id)
+        {
+            var dbRecipe = this.recipes.GetById(id);
+
+            //if (dbRecipe != null)
+            //{
+            //    this.recipes.Attach(dbRecipe);
+            //}
+
+            return dbRecipe;
+        }
+
+        public IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
+        {
+            return this.recipes
+                .All()
+                .OrderByDescending(r => r.Title)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
         }
 
         public void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, ICollection<Step> steps, bool isPrivate = false)
@@ -42,14 +61,12 @@
             this.recipes.Add(newRecipe);
             this.recipes.SaveChanges();
         }
-
-        public IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
+        
+        public void Update(Recipe recipe)
         {
-            return this.recipes
-                .All()
-                .OrderByDescending(r => r.Title)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize);
+
+            this.recipes.Update(recipe);
+            this.recipes.SaveChanges();
         }
 
         public void Delete(int id)
@@ -59,12 +76,6 @@
             this.recipes.Delete(recipe);
             this.recipes.SaveChanges();
         }
-
-        public Recipe GetById(int id)
-        {
-            var dbRecipe = this.recipes.GetById(id);
-
-            return dbRecipe;
-        }
+        
     }
 }

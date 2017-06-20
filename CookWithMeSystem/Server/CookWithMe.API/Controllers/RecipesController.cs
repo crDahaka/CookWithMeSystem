@@ -9,8 +9,11 @@
     using System.Linq;
     using System.Web.Http;
     using System.Net;
-    using System.Data.Entity;
     using System.Net.Http;
+    using CookWithMeSystem.Models;
+    using JsonPatch;
+    using System.Web.Http.OData;
+    using AutoMapper;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
@@ -63,6 +66,44 @@
             this.recipes.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
             
             return this.Ok();
+        }
+
+        //[Authorize]
+        //[HttpPatch]
+        //[ValidationModelState]
+        //[Route("update/{id}")]
+        //public IHttpActionResult Patch(int id, [FromBody]Recipe recipe)
+        //{
+
+        //    var dbRecipe = this.recipes.GetById(id);
+
+        //    if (dbRecipe == null)
+        //    {
+        //        throw new HttpResponseException(HttpStatusCode.NotFound);
+        //    }
+
+        //    this.recipes.Update(recipe);
+
+        //    return this.Ok();
+        //}
+
+
+
+        [HttpPut]
+        [Route("update/{id}")]
+        public IHttpActionResult UpdateRecipe(int id,[FromBody]SaveRecipeRequestModel model)
+        {
+            var recipe = this.recipes.GetById(id);
+
+            if (recipe == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            Mapper.Map<SaveRecipeRequestModel, Recipe>(model, recipe);
+            this.recipes.Update(recipe);
+
+            return Ok();
         }
 
         [HttpDelete]

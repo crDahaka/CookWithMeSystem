@@ -22,6 +22,8 @@
 
         public ICollection<IngredientViewModel> Ingredients { get; set; }
 
+        public ICollection<Step> Steps { get; set; }
+
         public void CreateMappings(IConfiguration config)
         {
             config.CreateMap<Recipe, RecipeResponseModel>()
