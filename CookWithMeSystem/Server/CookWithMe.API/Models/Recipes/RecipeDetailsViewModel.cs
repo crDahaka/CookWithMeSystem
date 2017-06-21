@@ -9,7 +9,7 @@
     using AutoMapper;
     using CookWithMe.API.Models.Steps;
 
-    public class RecipeResponseModel : IMapFrom<Recipe>, IHaveCustomMappings
+    public class RecipeDetailsViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -27,7 +27,7 @@
 
         public void CreateMappings(IConfiguration config)
         {
-            config.CreateMap<Recipe, RecipeResponseModel>()
+            config.CreateMap<Recipe, RecipeDetailsViewModel>()
                 .ForMember(r => r.Ingredients, opt => opt.MapFrom(i => i.Ingredients))
                 .ForMember(r => r.Steps, opt => opt.MapFrom(s => s.Steps))
                 .ForMember(r => r.Publisher, opt => opt.MapFrom(u => u.Publisher.UserName))

@@ -250,7 +250,7 @@
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\Account\SetPasswordViewModel.cs" />
     <Compile Include="Models\Ingredients\IngredientViewModel.cs" />
-    <Compile Include="Models\Recipes\RecipeResponseModel.cs" />
+    <Compile Include="Models\Recipes\RecipeDetailsViewModel.cs" />
     <Compile Include="Models\Recipes\SaveRecipeRequestModel.cs" />
     <Compile Include="Models\Steps\StepViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

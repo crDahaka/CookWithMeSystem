@@ -27,7 +27,7 @@
         {
             var result = this.recipeService
                 .All(page: 1)
-                .ProjectTo<RecipeResponseModel>()
+                .ProjectTo<RecipeDetailsViewModel>()
                 .ToList();
 
             return this.Ok(result);
@@ -39,10 +39,30 @@
         {
             var result = this.recipeService
                 .All(page, pageSize)
-                .ProjectTo<RecipeResponseModel>()
+                .ProjectTo<RecipeDetailsViewModel>()
                 .ToList();
 
             return this.Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("details/{id}")]
+        public IHttpActionResult GetRecipeDetails(int id)
+        {
+            var recipe = this.recipeService
+                .All()
+                .Where(r => r.ID == id)
+                .ProjectTo<RecipeDetailsViewModel>()
+                .FirstOrDefault();
+
+            if (recipe == null)
+            {
+                var message = string.Format("Recipe with id {0} not found", id);
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+            }
+
+            return this.Ok(recipe);
         }
 
         [Authorize]
@@ -70,7 +90,7 @@
         [HttpPut]
         [ValidationModelState]
         [Route("update/{id}")]
-        public IHttpActionResult UpdateRecipe(int id,[FromBody]SaveRecipeRequestModel model)
+        public IHttpActionResult UpdateRecipe(int id, [FromBody]SaveRecipeRequestModel model)
         {
             if (!ModelState.IsValid || model == null)
             {
