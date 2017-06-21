@@ -11,10 +11,7 @@
     using System.Net;
     using System.Net.Http;
     using CookWithMeSystem.Models;
-    using JsonPatch;
-    using System.Web.Http.OData;
     using AutoMapper;
-    using CookWithMe.API.Models.Ingredients;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
@@ -69,15 +66,22 @@
             return this.Ok();
         }
 
+        [Authorize]
         [HttpPut]
+        [ValidationModelState]
         [Route("update/{id}")]
         public IHttpActionResult UpdateRecipe(int id,[FromBody]SaveRecipeRequestModel model)
         {
+            if (!ModelState.IsValid || model == null)
+            {
+                return this.BadRequest("Invalid Model");
+            }
             var recipe = this.recipeService.GetById(id);
 
             if (recipe == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                var message = string.Format("Recipe with id {0} not found", id);
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
             }
 
             Mapper.Map<SaveRecipeRequestModel, Recipe>(model, recipe);
