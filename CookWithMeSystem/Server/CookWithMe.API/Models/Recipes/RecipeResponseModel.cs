@@ -7,6 +7,7 @@
     using System.Collections.Generic;
 
     using AutoMapper;
+    using CookWithMe.API.Models.Steps;
 
     public class RecipeResponseModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
@@ -22,13 +23,15 @@
 
         public ICollection<IngredientViewModel> Ingredients { get; set; }
 
-        public ICollection<Step> Steps { get; set; }
+        public ICollection<StepViewModel> Steps { get; set; }
 
         public void CreateMappings(IConfiguration config)
         {
             config.CreateMap<Recipe, RecipeResponseModel>()
                 .ForMember(r => r.Ingredients, opt => opt.MapFrom(i => i.Ingredients))
-                .ForMember(r => r.Publisher, opt => opt.MapFrom(u => u.Publisher.UserName));
+                .ForMember(r => r.Steps, opt => opt.MapFrom(s => s.Steps))
+                .ForMember(r => r.Publisher, opt => opt.MapFrom(u => u.Publisher.UserName))
+                .ReverseMap();
         }
     }
 } 

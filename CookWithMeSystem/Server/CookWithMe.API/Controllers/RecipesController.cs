@@ -14,20 +14,21 @@
     using JsonPatch;
     using System.Web.Http.OData;
     using AutoMapper;
+    using CookWithMe.API.Models.Ingredients;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
     {
-        private readonly IRecipeService recipes;
+        private readonly IRecipeService recipeService;
 
         public RecipesController(IRecipeService recipeService)
         {
-            this.recipes = recipeService;
+            this.recipeService = recipeService;
         }
 
         public IHttpActionResult GetAllRecipes()
         {
-            var result = this.recipes
+            var result = this.recipeService
                 .All(page: 1)
                 .ProjectTo<RecipeResponseModel>()
                 .ToList();
@@ -39,7 +40,7 @@
         [Route("all")]
         public IHttpActionResult GetAllRecipes (int page, int pageSize = GlobalConstants.DefaultPageSize)
         {
-            var result = this.recipes
+            var result = this.recipeService
                 .All(page, pageSize)
                 .ProjectTo<RecipeResponseModel>()
                 .ToList();
@@ -63,37 +64,16 @@
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
-            this.recipes.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
+            this.recipeService.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
             
             return this.Ok();
         }
-
-        //[Authorize]
-        //[HttpPatch]
-        //[ValidationModelState]
-        //[Route("update/{id}")]
-        //public IHttpActionResult Patch(int id, [FromBody]Recipe recipe)
-        //{
-
-        //    var dbRecipe = this.recipes.GetById(id);
-
-        //    if (dbRecipe == null)
-        //    {
-        //        throw new HttpResponseException(HttpStatusCode.NotFound);
-        //    }
-
-        //    this.recipes.Update(recipe);
-
-        //    return this.Ok();
-        //}
-
-
 
         [HttpPut]
         [Route("update/{id}")]
         public IHttpActionResult UpdateRecipe(int id,[FromBody]SaveRecipeRequestModel model)
         {
-            var recipe = this.recipes.GetById(id);
+            var recipe = this.recipeService.GetById(id);
 
             if (recipe == null)
             {
@@ -101,7 +81,8 @@
             }
 
             Mapper.Map<SaveRecipeRequestModel, Recipe>(model, recipe);
-            this.recipes.Update(recipe);
+
+            this.recipeService.Update(recipe);
 
             return Ok();
         }
@@ -110,7 +91,7 @@
         [Route("delete/{id}")]
         public IHttpActionResult DeleteRecipe(int id)
         {
-            var dbRecipe = this.recipes.GetById(id);
+            var dbRecipe = this.recipeService.GetById(id);
 
             if (dbRecipe == null)
             {
@@ -118,7 +99,7 @@
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
             }
 
-            this.recipes.Delete(id);
+            this.recipeService.Delete(id);
 
             return this.Ok();
         }

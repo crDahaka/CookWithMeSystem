@@ -6,6 +6,7 @@
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
+    using AutoMapper;
 
     public class RecipeService : IRecipeService
     {
@@ -26,12 +27,7 @@
         public Recipe GetById(int id)
         {
             var dbRecipe = this.recipes.GetById(id);
-
-            //if (dbRecipe != null)
-            //{
-            //    this.recipes.Attach(dbRecipe);
-            //}
-
+            
             return dbRecipe;
         }
 
@@ -64,6 +60,9 @@
         
         public void Update(Recipe recipe)
         {
+            var dbRecipe = this.GetById(recipe.ID);
+
+            this.AddOrUpdateIngredientStep(dbRecipe, recipe);
 
             this.recipes.Update(recipe);
             this.recipes.SaveChanges();
@@ -75,6 +74,35 @@
 
             this.recipes.Delete(recipe);
             this.recipes.SaveChanges();
+        }
+
+        private void AddOrUpdateIngredientStep(Recipe existingRecipe, Recipe recipeToCheck)
+        {
+            foreach (var ingr in recipeToCheck.Ingredients)
+            {
+                var existingIngredient = existingRecipe.Ingredients.FirstOrDefault(i => i.Name == ingr.Name);
+                if (existingIngredient != null)
+                {
+                    Mapper.Map(ingr, existingIngredient);
+                }
+                else
+                {
+                    existingRecipe.Ingredients.Add(Mapper.Map<Ingredient>(ingr));
+                }
+            }
+
+            foreach (var step in recipeToCheck.Steps)
+            {
+                var existingStep = existingRecipe.Steps.FirstOrDefault(s => s.Action == step.Action);
+                if (existingStep != null)
+                {
+                    Mapper.Map(step, existingStep);
+                }
+                else
+                {
+                    existingRecipe.Steps.Add(Mapper.Map<Step>(step));
+                }
+            }
         }
         
     }

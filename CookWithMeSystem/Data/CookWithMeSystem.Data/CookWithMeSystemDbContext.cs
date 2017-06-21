@@ -3,7 +3,6 @@
     using System.Data.Entity;
     using CookWithMeSystem.Models;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public class CookWithMeSystemDbContext : IdentityDbContext<User>, ICookWithMeSystemDbContext
     {
@@ -31,20 +30,19 @@
             return new CookWithMeSystemDbContext();
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Recipe>()
-            .HasMany(p => p.Ingredients)
-            .WithOptional()
-            .WillCascadeOnDelete(true);
+        //    modelBuilder.Entity<Recipe>()
+        //        .HasMany(i => i.Ingredients)
+        //        .WithMany(i => i.Recipes);
+            
+        //    modelBuilder.Entity<Recipe>()
+        //    .HasMany(p => p.Steps)
+        //    .WithRequired(s => s.Recipe)
+        //    .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Recipe>()
-            .HasMany(p => p.Steps)
-            .WithOptional()
-            .WillCascadeOnDelete(true);
-
-        }
+        //}
     }
 }
