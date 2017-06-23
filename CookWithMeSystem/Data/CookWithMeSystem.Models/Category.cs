@@ -7,20 +7,16 @@
 
     public class Category : BaseEntity
     {
-        private ICollection<Recipe> recipes;
 
         [StringLength(ValidationConstants.MaxCategoryName)]
         public string Name { get; set; }
 
+        public virtual ICollection<Recipe> Recipes { get; set; }
+
         public Category()
         {
-            this.recipes = new HashSet<Recipe>();
+            this.Recipes = new HashSet<Recipe>();
         }
-
-        public virtual ICollection<Recipe> Recipes
-        {
-            get { return this.recipes; }
-            set { this.recipes = value; }
-        }
+        
     }
 }

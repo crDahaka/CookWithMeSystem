@@ -7,6 +7,7 @@
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
     using AutoMapper;
+    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -40,24 +41,44 @@
                 .Take(pageSize);
         }
 
-        public void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, ICollection<Step> steps, bool isPrivate = false)
+        //public void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, ICollection<Step> steps, bool isPrivate = false)
+        //{
+        //    var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
+
+        //    var newRecipe = new Recipe
+        //    {
+        //        Title = title,
+        //        Directions = description,
+        //        PublisherID = currentUser.Id,
+        //        Ingredients = ingredients,
+        //        Steps = steps,
+        //        IsPrivate = isPrivate
+        //    };
+
+        //    this.recipes.Add(newRecipe);
+        //    this.recipes.SaveChanges();
+        //}
+
+        public void Add(Recipe recipe, string publisherID, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
-            var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
-            
+            var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherID);
+
             var newRecipe = new Recipe
             {
-                Title = title,
-                Description = description,
+                Title = recipe.Title,
+                Directions = recipe.Directions,
+                PreparationTime = recipe.PreparationTime,
+                ServingsCount = recipe.ServingsCount,
                 PublisherID = currentUser.Id,
                 Ingredients = ingredients,
                 Steps = steps,
-                IsPrivate = isPrivate
+                IsPrivate = recipe.IsPrivate
             };
             
             this.recipes.Add(newRecipe);
             this.recipes.SaveChanges();
         }
-        
+
         public void Update(Recipe recipe)
         {
             var dbRecipe = this.GetById(recipe.ID);

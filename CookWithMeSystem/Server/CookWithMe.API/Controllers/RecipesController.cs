@@ -69,9 +69,9 @@
         [HttpPost]
         [ValidationModelState]
         [Route("create")]
-        public IHttpActionResult CreateRecipe([FromBody]SaveRecipeRequestModel model)
+        public IHttpActionResult CreateRecipe([FromBody]AddRecipeViewModel recipeModel)
         {
-            if (!this.ModelState.IsValid || model == null)
+            if (!this.ModelState.IsValid || recipeModel == null)
             {
                 return this.BadRequest("Invalid Model");
             }
@@ -81,16 +81,19 @@
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
-            this.recipeService.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
+            var mappedRecipe = Mapper.Map<AddRecipeViewModel, Recipe>(recipeModel);
+            this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), recipeModel.Ingredients, recipeModel.Steps);
+
+            //this.recipeService.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
             
-            return this.Ok();
+            return this.Ok(mappedRecipe);
         }
 
         [Authorize]
         [HttpPut]
         [ValidationModelState]
         [Route("update/{id}")]
-        public IHttpActionResult UpdateRecipe(int id, [FromBody]SaveRecipeRequestModel model)
+        public IHttpActionResult UpdateRecipe(int id, [FromBody]AddRecipeViewModel model)
         {
             if (!ModelState.IsValid || model == null)
             {
@@ -104,7 +107,7 @@
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
             }
 
-            Mapper.Map<SaveRecipeRequestModel, Recipe>(model, recipe);
+            Mapper.Map<AddRecipeViewModel, Recipe>(model, recipe);
 
             this.recipeService.Update(recipe);
 
