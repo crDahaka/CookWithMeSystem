@@ -83,8 +83,6 @@
 
             var mappedRecipe = Mapper.Map<AddRecipeViewModel, Recipe>(recipeModel);
             this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), recipeModel.Ingredients, recipeModel.Steps);
-
-            //this.recipeService.Add(model.Title, model.Description,User.Identity.GetUserId(), model.Ingredients, model.Steps, model.IsPrivate);
             
             return this.Ok(mappedRecipe);
         }

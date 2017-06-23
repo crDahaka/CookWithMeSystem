@@ -11,9 +11,6 @@
 
         Recipe GetById(int id);
 
-        // void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, ICollection<Step> steps, bool isPrivate = false);
-
-
         void Add(Recipe recipe, string publisherID, ICollection<Ingredient> ingredients, ICollection<Step> steps);
 
         void Update(Recipe recipe);

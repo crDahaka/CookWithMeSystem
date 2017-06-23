@@ -41,24 +41,6 @@
                 .Take(pageSize);
         }
 
-        //public void Add(string title, string description, string publisherId, ICollection<Ingredient> ingredients, ICollection<Step> steps, bool isPrivate = false)
-        //{
-        //    var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherId);
-
-        //    var newRecipe = new Recipe
-        //    {
-        //        Title = title,
-        //        Directions = description,
-        //        PublisherID = currentUser.Id,
-        //        Ingredients = ingredients,
-        //        Steps = steps,
-        //        IsPrivate = isPrivate
-        //    };
-
-        //    this.recipes.Add(newRecipe);
-        //    this.recipes.SaveChanges();
-        //}
-
         public void Add(Recipe recipe, string publisherID, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
             var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherID);
