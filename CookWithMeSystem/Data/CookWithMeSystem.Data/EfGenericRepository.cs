@@ -12,7 +12,7 @@
 
         protected IDbSet<T> DbSet { get; set; }
 
-        public EfGenericRepository(CookWithMeSystemDbContext context)
+        public EfGenericRepository(ICookWithMeSystemDbContext context)
         {
             this.Context = context ?? throw new ArgumentException("An instance of DbContext is required to use this repository.", "context");
 

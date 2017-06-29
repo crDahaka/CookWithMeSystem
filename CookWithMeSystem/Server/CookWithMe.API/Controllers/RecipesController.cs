@@ -12,6 +12,8 @@
     using System.Net.Http;
     using CookWithMeSystem.Models;
     using AutoMapper;
+    using System.Collections;
+    using System.Collections.Generic;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
@@ -91,7 +93,7 @@
         [HttpPut]
         [ValidationModelState]
         [Route("update/{id}")]
-        public IHttpActionResult UpdateRecipe(int id, [FromBody]AddRecipeViewModel model)
+        public IHttpActionResult UpdateRecipe(int id, [FromBody]UpdateRecipeViewModel model)
         {
             if (!ModelState.IsValid || model == null)
             {
@@ -105,9 +107,9 @@
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
             }
 
-            Mapper.Map<AddRecipeViewModel, Recipe>(model, recipe);
+            Mapper.Map<UpdateRecipeViewModel, Recipe>(model, recipe);
 
-            this.recipeService.Update(recipe);
+            this.recipeService.Update(recipe, model.Ingredients, model.Steps);
 
             return Ok();
         }

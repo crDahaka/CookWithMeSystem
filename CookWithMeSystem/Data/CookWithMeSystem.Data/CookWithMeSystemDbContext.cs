@@ -43,11 +43,11 @@
                     ri.ToTable("RecipeIngredients");
                 });
 
-            modelBuilder.Entity<Step>()
-                .HasRequired<Recipe>(r => r.Recipe)
-                .WithMany(s => s.Steps)
-                .HasForeignKey(s => s.RecipeID)
-                .WillCascadeOnDelete(true);
+            //modelBuilder.Entity<Step>()
+            //    .HasRequired<Recipe>(r => r.Recipe)
+            //    .WithMany(s => s.Steps)
+            //    .HasForeignKey(s => s.RecipeID)
+            //    .WillCascadeOnDelete(true);
 
             base.OnModelCreating(modelBuilder);
 

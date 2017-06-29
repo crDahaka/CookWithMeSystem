@@ -7,7 +7,6 @@
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
     using AutoMapper;
-    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -61,11 +60,11 @@
             this.recipes.SaveChanges();
         }
 
-        public void Update(Recipe recipe)
+        public void Update(Recipe recipe, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
             var dbRecipe = this.GetById(recipe.ID);
-
-            this.AddOrUpdateIngredientStep(dbRecipe, recipe);
+            
+            AddOrUpdateIngredientStep(dbRecipe, ingredients, steps);
 
             this.recipes.Update(recipe);
             this.recipes.SaveChanges();
@@ -79,33 +78,26 @@
             this.recipes.SaveChanges();
         }
 
-        private void AddOrUpdateIngredientStep(Recipe existingRecipe, Recipe recipeToCheck)
+        private void AddOrUpdateIngredientStep(Recipe existingRecipe, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
-            foreach (var ingr in recipeToCheck.Ingredients)
-            {
-                var existingIngredient = existingRecipe.Ingredients.FirstOrDefault(i => i.Name == ingr.Name);
-                if (existingIngredient != null)
-                {
-                    Mapper.Map(ingr, existingIngredient);
-                }
-                else
-                {
-                    existingRecipe.Ingredients.Add(Mapper.Map<Ingredient>(ingr));
-                }
-            }
+            var dbIngrs = existingRecipe.Ingredients;
+            dbIngrs.Clear();
 
-            foreach (var step in recipeToCheck.Steps)
+            foreach (var ingr in ingredients)
             {
-                var existingStep = existingRecipe.Steps.FirstOrDefault(s => s.Action == step.Action);
-                if (existingStep != null)
-                {
-                    Mapper.Map(step, existingStep);
-                }
-                else
-                {
-                    existingRecipe.Steps.Add(Mapper.Map<Step>(step));
-                }
+                var existingIngredient = this.ingredients.All().FirstOrDefault(i => i.Name == ingr.Name);
+
+                existingRecipe.Ingredients.Add(existingIngredient != null ? existingIngredient : Mapper.Map<Ingredient>(ingr));
             }
+            
+            foreach (var step in steps)
+            {
+                var existingStep = this.steps.All().FirstOrDefault(s => s.Action == step.Action);
+
+                existingRecipe.Steps.Add(existingStep != null ? existingStep : Mapper.Map<Step>(step));
+
+            }
+            
         }
         
     }

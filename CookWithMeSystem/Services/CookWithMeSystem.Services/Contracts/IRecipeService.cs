@@ -13,7 +13,7 @@
 
         void Add(Recipe recipe, string publisherID, ICollection<Ingredient> ingredients, ICollection<Step> steps);
 
-        void Update(Recipe recipe);
+        void Update(Recipe recipe, ICollection<Ingredient> ingredients, ICollection<Step> steps);
 
         void Delete(int id);
     }
