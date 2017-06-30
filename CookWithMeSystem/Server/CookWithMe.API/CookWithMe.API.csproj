@@ -243,6 +243,7 @@
     <Compile Include="Infrastructure\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\IMapFrom.cs" />
     <Compile Include="Infrastructure\ValidationAttributes\CheckModelForNullAttribute.cs" />
+    <Compile Include="Infrastructure\ValidationAttributes\FinalizeValidationAttribute.cs" />
     <Compile Include="Infrastructure\ValidationAttributes\ProcessExceptionFilterAttribute.cs" />
     <Compile Include="Infrastructure\ValidationAttributes\ProcessException.cs" />
     <Compile Include="Infrastructure\ValidationAttributes\ValidationModelStateAttribute.cs" />

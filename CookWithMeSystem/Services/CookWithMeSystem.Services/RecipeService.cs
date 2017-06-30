@@ -7,6 +7,8 @@
     using CookWithMeSystem.Common.Constants;
     using System.Collections.Generic;
     using AutoMapper;
+    using System.Data.Entity.Validation;
+    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -66,8 +68,17 @@
             
             AddOrUpdateIngredientStep(dbRecipe, ingredients, steps);
 
-            this.recipes.Update(recipe);
-            this.recipes.SaveChanges();
+            try
+            {
+                this.recipes.Update(recipe);
+                this.recipes.SaveChanges();
+
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public void Delete(int id)
@@ -78,18 +89,27 @@
             this.recipes.SaveChanges();
         }
 
+        /// <summary>
+        /// Check if the recipe contains existing ingredient/step, then add or update it.
+        /// </summary>
+        /// <param name="existingRecipe"></param>
+        /// <param name="ingredients"></param>
+        /// <param name="steps"></param>
         private void AddOrUpdateIngredientStep(Recipe existingRecipe, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
             var dbIngrs = existingRecipe.Ingredients;
             dbIngrs.Clear();
 
-            foreach (var ingr in ingredients)
+            foreach (var ingredient in ingredients)
             {
-                var existingIngredient = this.ingredients.All().FirstOrDefault(i => i.Name == ingr.Name);
+                var existingIngredient = this.ingredients.All().FirstOrDefault(i => i.Name == ingredient.Name);
 
-                existingRecipe.Ingredients.Add(existingIngredient != null ? existingIngredient : Mapper.Map<Ingredient>(ingr));
+                existingRecipe.Ingredients.Add(existingIngredient != null ? existingIngredient : Mapper.Map<Ingredient>(ingredient));
             }
             
+            var dbSteps = existingRecipe.Steps;
+            dbSteps.Clear();
+
             foreach (var step in steps)
             {
                 var existingStep = this.steps.All().FirstOrDefault(s => s.Action == step.Action);

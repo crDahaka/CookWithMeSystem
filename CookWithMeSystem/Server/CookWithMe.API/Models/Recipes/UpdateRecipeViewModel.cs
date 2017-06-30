@@ -6,6 +6,9 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using AutoMapper;
+    using CookWithMe.API.Infrastructure.ValidationAttributes;
+    using CookWithMe.API.Models.Steps;
+    using CookWithMe.API.Models.Ingredients;
 
     public class UpdateRecipeViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
@@ -27,16 +30,19 @@
         public bool IsPrivate { get; set; }
 
         [Required]
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<IngredientViewModel> Ingredients { get; set; }
 
         [Required]
-        public ICollection<Step> Steps { get; set; }
+        public ICollection<StepViewModel> Steps { get; set; }
 
         public void CreateMappings(IConfiguration config)
         {
             config.CreateMap<UpdateRecipeViewModel, Recipe>()
                 .ForMember(r => r.Ingredients, opt => opt.Ignore())
                 .ForMember(r => r.Steps, opt => opt.Ignore());
+
+            config.CreateMap<IngredientViewModel, Ingredient>();
+            config.CreateMap<StepViewModel, Step>();
         }
     }
 }

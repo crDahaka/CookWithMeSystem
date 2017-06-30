@@ -14,6 +14,7 @@
     using AutoMapper;
     using System.Collections;
     using System.Collections.Generic;
+    using CookWithMe.API.Models.Ingredients;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
@@ -108,8 +109,10 @@
             }
 
             Mapper.Map<UpdateRecipeViewModel, Recipe>(model, recipe);
+            var mappedIngredients = Mapper.Map<ICollection<Ingredient>>(model.Ingredients);
+            var mappedSteps = Mapper.Map<ICollection<Step>>(model.Steps);
 
-            this.recipeService.Update(recipe, model.Ingredients, model.Steps);
+            this.recipeService.Update(recipe, mappedIngredients, mappedSteps);
 
             return Ok();
         }
