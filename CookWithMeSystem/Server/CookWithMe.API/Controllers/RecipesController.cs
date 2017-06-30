@@ -12,9 +12,7 @@
     using System.Net.Http;
     using CookWithMeSystem.Models;
     using AutoMapper;
-    using System.Collections;
     using System.Collections.Generic;
-    using CookWithMe.API.Models.Ingredients;
 
     [RoutePrefix("api/recipes")]
     public class RecipesController : ApiController
@@ -47,8 +45,7 @@
 
             return this.Ok(result);
         }
-
-        [Authorize]
+        
         [HttpGet]
         [Route("details/{id}")]
         public IHttpActionResult GetRecipeDetails(int id)
@@ -61,8 +58,7 @@
 
             if (recipe == null)
             {
-                var message = string.Format("Recipe with id {0} not found", id);
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage));
             }
 
             return this.Ok(recipe);
@@ -72,20 +68,15 @@
         [HttpPost]
         [ValidationModelState]
         [Route("create")]
-        public IHttpActionResult CreateRecipe([FromBody]AddRecipeViewModel recipeModel)
-        {
-            if (!this.ModelState.IsValid || recipeModel == null)
-            {
-                return this.BadRequest("Invalid Model");
-            }
-
+        public IHttpActionResult CreateRecipe([FromBody]AddRecipeViewModel model)
+        { 
             if (User.Identity.GetUserId() == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
 
-            var mappedRecipe = Mapper.Map<AddRecipeViewModel, Recipe>(recipeModel);
-            this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), recipeModel.Ingredients, recipeModel.Steps);
+            var mappedRecipe = Mapper.Map<AddRecipeViewModel, Recipe>(model);
+            this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), model.Ingredients, model.Steps);
             
             return this.Ok(mappedRecipe);
         }
@@ -104,8 +95,7 @@
 
             if (recipe == null)
             {
-                var message = string.Format("Recipe with id {0} not found", id);
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage));
             }
 
             Mapper.Map<UpdateRecipeViewModel, Recipe>(model, recipe);
@@ -117,6 +107,7 @@
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
         [Route("delete/{id}")]
         public IHttpActionResult DeleteRecipe(int id)
@@ -125,13 +116,13 @@
 
             if (dbRecipe == null)
             {
-                var message = string.Format("Recipe with id {0} not found", id);
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage));
             }
 
             this.recipeService.Delete(id);
 
             return this.Ok();
         }
+        
     }
 }

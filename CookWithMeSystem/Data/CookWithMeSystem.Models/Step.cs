@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CookWithMeSystem.Models
+﻿namespace CookWithMeSystem.Models
 {
-
     public class Step : BaseEntity
     {
-        [Required]
         public string Action { get; set; }
 
         public int EstimatedTime { get; set; }

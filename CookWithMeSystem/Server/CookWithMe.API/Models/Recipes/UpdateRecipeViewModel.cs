@@ -6,24 +6,25 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using AutoMapper;
-    using CookWithMe.API.Infrastructure.ValidationAttributes;
     using CookWithMe.API.Models.Steps;
     using CookWithMe.API.Models.Ingredients;
 
     public class UpdateRecipeViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
         [Required]
-        //[StringLength(ValidationConstants.MaxRecipeTitle, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeTitle)]
+        [StringLength(ValidationConstants.MaxRecipeTitle, ErrorMessage = ValidationConstants.RecipeErrorMessage, MinimumLength = ValidationConstants.MinRecipeTitle)]
         public string Title { get; set; }
 
         [Required]
-        //[StringLength(ValidationConstants.MaxRecipeDescription, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeDescription)]
+        [StringLength(ValidationConstants.MaxRecipeDirections, ErrorMessage = ValidationConstants.RecipeErrorMessage, MinimumLength = ValidationConstants.MinRecipeDirections)]
         public string Directions { get; set; }
 
         [Required]
+        [Range(ValidationConstants.MinPreparationTime, ValidationConstants.MaxPreparationTime, ErrorMessage = ValidationConstants.RecipeErrorMessage)]
         public int PreparationTime { get; set; }
 
         [Required]
+        [Range(ValidationConstants.MinRecipeServings, ValidationConstants.MaxRecipeServings, ErrorMessage = ValidationConstants.RecipeErrorMessage)]
         public byte ServingsCount { get; set; }
 
         [Required]
@@ -40,9 +41,6 @@
             config.CreateMap<UpdateRecipeViewModel, Recipe>()
                 .ForMember(r => r.Ingredients, opt => opt.Ignore())
                 .ForMember(r => r.Steps, opt => opt.Ignore());
-
-            config.CreateMap<IngredientViewModel, Ingredient>();
-            config.CreateMap<StepViewModel, Step>();
         }
     }
 }

@@ -17,7 +17,7 @@
         public string Title { get; set; }
         
         [Required]
-        [StringLength(ValidationConstants.MaxRecipeDescription, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeDescription)]
+        //[StringLength(ValidationConstants.MaxRecipeDirections, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeDescription)]
         public string Directions { get; set; }
 
         [Required]

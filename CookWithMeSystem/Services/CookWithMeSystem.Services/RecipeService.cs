@@ -8,7 +8,6 @@
     using System.Collections.Generic;
     using AutoMapper;
     using System.Data.Entity.Validation;
-    using System;
 
     public class RecipeService : IRecipeService
     {
@@ -17,6 +16,13 @@
         private readonly IRepository<Ingredient> ingredients;
         private readonly IRepository<Step> steps;
 
+        /// <summary>
+        /// Recipe service constructor.
+        /// </summary>
+        /// <param name="recipesRepo"></param>
+        /// <param name="usersRepo"></param>
+        /// <param name="ingredientsRepo"></param>
+        /// <param name="stepsRepo"></param>
         public RecipeService(
             IRepository<Recipe> recipesRepo, IRepository<User> usersRepo, IRepository<Ingredient> ingredientsRepo, IRepository<Step> stepsRepo)
         {
@@ -26,6 +32,11 @@
             this.steps = stepsRepo;
         }
 
+        /// <summary>
+        /// Return a single recipe entity by given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Recipe GetById(int id)
         {
             var dbRecipe = this.recipes.GetById(id);
@@ -33,6 +44,12 @@
             return dbRecipe;
         }
 
+        /// <summary>
+        /// Retrieves a list of recipes from the db.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {
             return this.recipes
@@ -42,6 +59,13 @@
                 .Take(pageSize);
         }
 
+        /// <summary>
+        /// Creates new recipe.
+        /// </summary>
+        /// <param name="recipe"></param>
+        /// <param name="publisherID"></param>
+        /// <param name="ingredients"></param>
+        /// <param name="steps"></param>
         public void Add(Recipe recipe, string publisherID, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
             var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherID);
@@ -57,11 +81,25 @@
                 Steps = steps,
                 IsPrivate = recipe.IsPrivate
             };
+
+            try
+            {
+                this.recipes.Add(newRecipe);
+                this.recipes.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
             
-            this.recipes.Add(newRecipe);
-            this.recipes.SaveChanges();
         }
 
+        /// <summary>
+        /// Save the updated recipe.
+        /// </summary>
+        /// <param name="recipe"></param>
+        /// <param name="ingredients"></param>
+        /// <param name="steps"></param>
         public void Update(Recipe recipe, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
             var dbRecipe = this.GetById(recipe.ID);
@@ -81,12 +119,24 @@
             
         }
 
+        /// <summary>
+        /// Delete a single recipe entity by given id;
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(int id)
         {
             var recipe = this.GetById(id);
 
-            this.recipes.Delete(recipe);
-            this.recipes.SaveChanges();
+            try
+            {
+                this.recipes.Delete(recipe);
+                this.recipes.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+            
         }
 
         /// <summary>
