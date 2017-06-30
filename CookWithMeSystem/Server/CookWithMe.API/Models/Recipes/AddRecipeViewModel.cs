@@ -13,27 +13,29 @@
     public class AddRecipeViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
         [Required]
-        [StringLength(ValidationConstants.MaxRecipeTitle, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeTitle)]
+        [StringLength(ValidationConstants.MaxRecipeTitle, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinRecipeTitle)]
         public string Title { get; set; }
         
         [Required]
-        //[StringLength(ValidationConstants.MaxRecipeDirections, ErrorMessage = "{0} should be at least {2} characters long.", MinimumLength = ValidationConstants.MinRecipeDescription)]
+        [StringLength(ValidationConstants.MaxRecipeDirections, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinRecipeDirections)]
         public string Directions { get; set; }
 
         [Required]
+        [Range(ValidationConstants.MinPreparationTime, ValidationConstants.MaxPreparationTime)]
         public int PreparationTime { get; set; }
 
         [Required]
+        [Range(ValidationConstants.MinRecipeServings, ValidationConstants.MaxRecipeServings)]
         public byte ServingsCount { get; set; }
         
         [Required]
         public bool IsPrivate { get; set; }
 
         [Required]
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<IngredientViewModel> Ingredients { get; set; }
 
         [Required]
-        public ICollection<Step> Steps { get; set; }
+        public ICollection<StepViewModel> Steps { get; set; }
 
         public void CreateMappings(IConfiguration config)
         {

@@ -76,7 +76,10 @@
             }
 
             var mappedRecipe = Mapper.Map<AddRecipeViewModel, Recipe>(model);
-            this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), model.Ingredients, model.Steps);
+            var mappedIngredients = Mapper.Map<ICollection<Ingredient>>(model.Ingredients);
+            var mappedSteps = Mapper.Map<ICollection<Step>>(model.Steps);
+
+            this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), mappedIngredients, mappedSteps);
             
             return this.Ok(mappedRecipe);
         }
@@ -87,10 +90,6 @@
         [Route("update/{id}")]
         public IHttpActionResult UpdateRecipe(int id, [FromBody]UpdateRecipeViewModel model)
         {
-            if (!ModelState.IsValid || model == null)
-            {
-                return this.BadRequest("Invalid Model");
-            }
             var recipe = this.recipeService.GetById(id);
 
             if (recipe == null)

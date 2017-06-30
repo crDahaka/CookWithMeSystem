@@ -12,19 +12,19 @@
     public class UpdateRecipeViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
         [Required]
-        [StringLength(ValidationConstants.MaxRecipeTitle, ErrorMessage = ValidationConstants.RecipeErrorMessage, MinimumLength = ValidationConstants.MinRecipeTitle)]
+        [StringLength(ValidationConstants.MaxRecipeTitle, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinRecipeTitle)]
         public string Title { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.MaxRecipeDirections, ErrorMessage = ValidationConstants.RecipeErrorMessage, MinimumLength = ValidationConstants.MinRecipeDirections)]
+        [StringLength(ValidationConstants.MaxRecipeDirections, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinRecipeDirections)]
         public string Directions { get; set; }
 
         [Required]
-        [Range(ValidationConstants.MinPreparationTime, ValidationConstants.MaxPreparationTime, ErrorMessage = ValidationConstants.RecipeErrorMessage)]
+        [Range(ValidationConstants.MinPreparationTime, ValidationConstants.MaxPreparationTime)]
         public int PreparationTime { get; set; }
 
         [Required]
-        [Range(ValidationConstants.MinRecipeServings, ValidationConstants.MaxRecipeServings, ErrorMessage = ValidationConstants.RecipeErrorMessage)]
+        [Range(ValidationConstants.MinRecipeServings, ValidationConstants.MaxRecipeServings)]
         public byte ServingsCount { get; set; }
 
         [Required]

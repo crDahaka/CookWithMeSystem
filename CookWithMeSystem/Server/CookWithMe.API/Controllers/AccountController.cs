@@ -44,11 +44,6 @@
         [Route("register")]
         public async Task<IHttpActionResult> Register([FromBody]RegisterViewModel model)
         {
-            if (!ModelState.IsValid || model == null)
-            {
-                return BadRequest("Invalid model body.");
-            }
-
             var newUser = new User
             {
                 FirstName = model.FirstName,
@@ -74,11 +69,6 @@
         [Route("changePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            if (!ModelState.IsValid || model == null)
-            {
-                return BadRequest("Invalid model state.");
-            }
-
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             
             return Ok();
@@ -89,11 +79,6 @@
         [Route("setPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordViewModel model)
         {
-            if (!ModelState.IsValid || model == null)
-            {
-                return BadRequest("Invalid model state.");
-            }
-
             IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
             
             return Ok();

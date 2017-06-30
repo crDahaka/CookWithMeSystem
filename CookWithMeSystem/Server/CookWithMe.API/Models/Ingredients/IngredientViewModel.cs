@@ -9,7 +9,7 @@
     {
         public int ID { get; set; }
 
-        [StringLength(ValidationConstants.MaxIngredientName, ErrorMessage = ValidationConstants.RecipeErrorMessage, MinimumLength = ValidationConstants.MinIngredientName)]
+        [StringLength(ValidationConstants.MaxIngredientName, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinIngredientName)]
         public string Name { get; set; }
         
     }

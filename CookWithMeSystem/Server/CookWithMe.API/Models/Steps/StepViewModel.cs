@@ -9,10 +9,10 @@
     {
         public int ID { get; set; }
 
-        [StringLength(ValidationConstants.MaxStepAction, ErrorMessage = ValidationConstants.RecipeErrorMessage, MinimumLength = ValidationConstants.MinStepAction)]
+        [StringLength(ValidationConstants.MaxStepAction, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinStepAction)]
         public string Action { get; set; }
         
-        [Range(ValidationConstants.MinStepTime, ValidationConstants.MaxStepTime, ErrorMessage = ValidationConstants.RecipeErrorMessage)]
+        [Range(ValidationConstants.MinStepTime, ValidationConstants.MaxStepTime, ErrorMessage = ValidationConstants.ValidationErrorMessage)]
         public int EstimatedTime { get; set; }
 
     }
