@@ -47,7 +47,7 @@
         }
         
         [HttpGet]
-        [Route("details/{id}")]
+        [Route("details/{id:int}")]
         public IHttpActionResult GetRecipeDetails(int id)
         {
             var recipe = this.recipeService
@@ -69,7 +69,7 @@
         [ValidationModelState]
         [Route("create")]
         public IHttpActionResult CreateRecipe([FromBody]AddRecipeViewModel model)
-        { 
+        {
             if (User.Identity.GetUserId() == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
@@ -80,14 +80,14 @@
             var mappedSteps = Mapper.Map<ICollection<Step>>(model.Steps);
 
             this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), mappedIngredients, mappedSteps);
-            
+
             return this.Ok(mappedRecipe);
         }
 
         [Authorize]
         [HttpPut]
         [ValidationModelState]
-        [Route("update/{id}")]
+        [Route("update/{id:int}")]
         public IHttpActionResult UpdateRecipe(int id, [FromBody]UpdateRecipeViewModel model)
         {
             var recipe = this.recipeService.GetById(id);
@@ -108,7 +108,7 @@
 
         [Authorize]
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("delete/{id:int}")]
         public IHttpActionResult DeleteRecipe(int id)
         {
             var dbRecipe = this.recipeService.GetById(id);

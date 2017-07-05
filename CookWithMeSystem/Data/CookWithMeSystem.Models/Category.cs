@@ -7,8 +7,7 @@
 
     public class Category : BaseEntity
     {
-
-        [StringLength(ValidationConstants.MaxCategoryName)]
+        
         public string Name { get; set; }
 
         public virtual ICollection<Recipe> Recipes { get; set; }

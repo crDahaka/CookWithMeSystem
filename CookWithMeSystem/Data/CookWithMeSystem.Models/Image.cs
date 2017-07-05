@@ -2,8 +2,8 @@
 {
     public class Image : BaseEntity
     {
-        public byte[] Content { get; set; }
+        public string Path { get; set; }
 
-        public string FileExtension { get; set; }
+        public int RecipeID { get; set; }
     }
 }
