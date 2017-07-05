@@ -56,7 +56,7 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
-    <Compile Include="Image.cs" />
+    <Compile Include="Picture.cs" />
     <Compile Include="Ingredient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recipe.cs" />

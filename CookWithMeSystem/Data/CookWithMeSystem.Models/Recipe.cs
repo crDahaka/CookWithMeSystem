@@ -25,9 +25,9 @@
 
         public virtual User Publisher { get; set; }
 
-        public int? ImageID { get; set; }
+        public int? PictureID { get; set; }
 
-        public virtual Image Image { get; set; }
+        public virtual Picture Picture { get; set; }
 
         public int? CategoryID { get; set; }
 

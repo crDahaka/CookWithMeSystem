@@ -20,7 +20,7 @@
 
         public virtual IDbSet<Comment> Comments { get; set; }
 
-        public virtual IDbSet<Image> Images { get; set; }
+        public virtual IDbSet<Picture> Pictures { get; set; }
 
         public virtual IDbSet<Category> Categories { get; set; }
 

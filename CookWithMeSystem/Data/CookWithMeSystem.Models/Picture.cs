@@ -1,6 +1,6 @@
 ﻿namespace CookWithMeSystem.Models
 {
-    public class Image : BaseEntity
+    public class Picture : BaseEntity
     {
         public string Path { get; set; }
 
