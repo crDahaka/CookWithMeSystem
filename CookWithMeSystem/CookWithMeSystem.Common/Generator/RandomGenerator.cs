@@ -18,7 +18,7 @@
             return this.random.Next(min, max + 1);
         }
 
-        public string RandomString(int minLength = 3, int maxLength = 25)
+        public string RandomString(int minLength = 3, int maxLength = 1000)
         {
             var result = new StringBuilder();
             var length = this.random.Next(minLength, maxLength + 1);

@@ -48,20 +48,19 @@
         
         [HttpGet]
         [Route("details/{id:int}")]
-        public IHttpActionResult GetRecipeDetails(int id)
+        public HttpResponseMessage GetRecipeDetails(int id)
         {
-            var recipe = this.recipeService
-                .All()
-                .Where(r => r.ID == id)
-                .ProjectTo<RecipeDetailsViewModel>()
-                .FirstOrDefault();
+            var recipe =  Mapper.Map<RecipeDetailsViewModel>(this.recipeService.GetById(id));
 
             if (recipe == null)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage));
+                //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage));
+                //return Content(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage);
+                HttpError errorMsg = new HttpError(ValidationConstants.RecipeNotFoundErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.NotFound, errorMsg);
             }
 
-            return this.Ok(recipe);
+            return Request.CreateResponse(HttpStatusCode.OK, recipe);
         }
 
         [Authorize]
