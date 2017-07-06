@@ -38,11 +38,9 @@
         [Route("all")]
         public IHttpActionResult GetAllRecipes (int page, int pageSize = GlobalConstants.DefaultPageSize)
         {
-            var result = this.recipeService
-                .All(page, pageSize)
-                .ProjectTo<RecipeDetailsViewModel>()
-                .ToList();
-
+            //TODO: prevent negative page number exception
+            var result = Mapper.Map<IList<RecipeDetailsViewModel>>(this.recipeService.All(page, pageSize));
+            
             return this.Ok(result);
         }
         
@@ -54,10 +52,7 @@
 
             if (recipe == null)
             {
-                //throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage));
-                //return Content(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage);
-                HttpError errorMsg = new HttpError(ValidationConstants.RecipeNotFoundErrorMessage);
-                return Request.CreateResponse(HttpStatusCode.NotFound, errorMsg);
+                return Request.CreateResponse(HttpStatusCode.NotFound, new HttpError(ValidationConstants.RecipeNotFoundErrorMessage));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, recipe);
