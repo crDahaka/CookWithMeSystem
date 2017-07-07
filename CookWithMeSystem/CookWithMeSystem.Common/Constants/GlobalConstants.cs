@@ -11,5 +11,14 @@
         public const string DefaultUploadPath = "~/Uploads/";
 
         public const string UploadImageKey = "UploadedImage";
+
+        public const string SuccessCreateMessage = "Recipe has been successfully created.";
+
+        public const string SuccessDeleteMessage = "Recipe has been successfully deleted.";
+
+        public const string SuccessUpdateMessage = "Recipe has veen successfully updated.";
+
+        public const string RecipeNotFoundErrorMessage = "Recipe could not be found.";
+        
     }
 }

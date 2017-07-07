@@ -19,6 +19,8 @@
 
         public string Publisher { get; set; }
 
+        public string CreationDate { get; set; }
+
         public bool IsPrivate { get; set; }
 
         public ICollection<IngredientViewModel> Ingredients { get; set; }

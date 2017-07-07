@@ -52,9 +52,11 @@
         /// <returns></returns>
         public IQueryable<Recipe> All(int page = 1, int pageSize = GlobalConstants.DefaultPageSize)
         {
+            if (page <= 0) page = 1;
+
             return this.recipes
                 .All()
-                .OrderByDescending(r => r.Title)
+                .OrderByDescending(r => r.CreationDate)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize);
         }

@@ -52,9 +52,7 @@
         public const string ValidationErrorMessage = "{0} should be at least {2} characters long.";
 
         public const string EmailErrorMessage = "The email address is invalid, please try again.";
-
-        public const string RecipeNotFoundErrorMessage = "Recipe could not be found.";
-
+        
         public const string ComparePasswordErrorMessage = "The password and confirm password do not match.";
 
     }
