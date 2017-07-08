@@ -1,5 +1,7 @@
 ﻿namespace CookWithMe.API.Controllers
 {
+    using CookWithMe.API.Infrastructure;
+    using CookWithMe.API.Models;
     using CookWithMeSystem.Common.Constants;
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Models;
@@ -33,7 +35,7 @@
 
             if (dbRecipe == null)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, ValidationConstants.RecipeNotFoundErrorMessage));
+                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
             }
 
             if (HttpContext.Current.Request.Files.AllKeys.Any())
@@ -47,13 +49,13 @@
                     }
                     catch (DirectoryNotFoundException dirEx)
                     {
-
                         throw dirEx;
                     }
                     
                     var image = new Picture
                     {
                         Path = GlobalConstants.DefaultUploadPath + uploadedImage.FileName,
+                        FileExtension = uploadedImage.FileName.Split(new [] { '.' }).Last(),
                         RecipeID = dbRecipe.ID
                     };
 
