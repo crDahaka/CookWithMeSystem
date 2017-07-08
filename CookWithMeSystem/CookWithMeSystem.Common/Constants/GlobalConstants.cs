@@ -12,13 +12,17 @@
 
         public const string UploadImageKey = "UploadedImage";
 
-        public const string SuccessCreateMessage = "Recipe has been successfully created.";
+        public const string SuccessCreateMessage = "The item has been successfully created.";
 
-        public const string SuccessDeleteMessage = "Recipe has been successfully deleted.";
+        public const string SuccessDeleteMessage = "The item has been successfully deleted.";
 
-        public const string SuccessUpdateMessage = "Recipe has veen successfully updated.";
-
+        public const string SuccessUpdateMessage = "The item has veen successfully updated.";
+        
         public const string RecipeNotFoundErrorMessage = "Recipe could not be found.";
+
+        public const string PictureNotFoundErrorMessage = "Picture could not be found.";
+
+        public const string InvalidRequestFormat = "This request is not properly formatted.";
         
     }
 }

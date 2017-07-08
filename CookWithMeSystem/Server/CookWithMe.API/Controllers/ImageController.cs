@@ -64,11 +64,11 @@
                     this.pictures.SaveChanges();
                     
                 }
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, GlobalConstants.SuccessCreateMessage);
             }
             else
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted."));
+                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotAcceptable, GlobalConstants.InvalidRequestFormat);
             }
             
         }
@@ -78,12 +78,19 @@
         {
             var dbPicture = this.pictures.GetById(id);
 
-            var result = new HttpResponseMessage(HttpStatusCode.OK);
+            if (dbPicture == null)
+            {
+                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.PictureNotFoundErrorMessage });
+            }
+
+            var result = new HttpResponseMessage();
             string filePath = HostingEnvironment.MapPath(dbPicture.Path);
+
             using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
-                Image image = Image.FromStream(fileStream);
+                var image = Image.FromStream(fileStream);
                 MemoryStream memoryStream = new MemoryStream();
+
                 image.Save(memoryStream, ImageFormat.Jpeg);
                 result.Content = new ByteArrayContent(memoryStream.ToArray());
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
