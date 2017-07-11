@@ -20,6 +20,8 @@
 
         public const int MinLastName = 2;
 
+        public const int MinCommentContent = 5;
+
         public const int MinPassword = 6;
 
         public const int MaxPassword = 25;
