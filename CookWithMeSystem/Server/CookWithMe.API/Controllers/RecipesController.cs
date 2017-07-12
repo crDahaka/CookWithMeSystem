@@ -11,7 +11,6 @@
     using CookWithMeSystem.Models;
     using AutoMapper;
     using System.Collections.Generic;
-    using CookWithMe.API.Infrastructure;
     using CookWithMe.API.Models;
     using CookWithMeSystem.Data;
 

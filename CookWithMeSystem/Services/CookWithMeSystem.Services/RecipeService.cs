@@ -62,6 +62,7 @@
                 Directions = recipe.Directions,
                 PreparationTime = recipe.PreparationTime,
                 ServingsCount = recipe.ServingsCount,
+                Level = recipe.Level,
                 PublisherID = currentUser.Id,
                 Ingredients = ingredients,
                 Steps = steps,

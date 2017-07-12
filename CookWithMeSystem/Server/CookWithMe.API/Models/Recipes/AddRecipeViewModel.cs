@@ -32,6 +32,9 @@
         public bool IsPrivate { get; set; }
 
         [Required]
+        public DifficultyLevel Level { get; set; }
+
+        [Required]
         public ICollection<IngredientViewModel> Ingredients { get; set; }
 
         [Required]

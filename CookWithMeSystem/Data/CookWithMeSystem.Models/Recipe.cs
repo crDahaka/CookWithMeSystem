@@ -9,9 +9,15 @@
         
         public string Directions { get; set; }
 
-        public int PreparationTime { get; set; }
+        public byte PreparationTime { get; set; }
+
+        public int CookTime { get; set; }
+
+        public int TotalTime { get; set; }
 
         public byte ServingsCount { get; set; }
+
+        public DifficultyLevel Level { get; set; }
 
         public DateTime? CreationDate { get; set; }
 

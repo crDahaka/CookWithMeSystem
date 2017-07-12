@@ -92,8 +92,11 @@ namespace CookWithMeSystem.Data.Migrations
                     {
                         Title = this.random.RandomString(3, 20),
                         Directions = this.random.RandomString(50, 1000),
-                        PreparationTime = this.random.RandomNumber(1, 1000),
+                        PreparationTime = (byte)this.random.RandomNumber(1, 249),
+                        CookTime = this.random.RandomNumber(1, 249),
+                        TotalTime = this.random.RandomNumber(40, 1000),
                         ServingsCount = 3,
+                        Level = DifficultyLevel.Intermediate,
                         Publisher = users[this.random.RandomNumber(0, users.Count - 1)],
                         IsPrivate = false
                     };

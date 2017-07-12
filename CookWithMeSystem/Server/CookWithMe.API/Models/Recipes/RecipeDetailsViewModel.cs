@@ -3,11 +3,11 @@
     using CookWithMe.API.Infrastructure;
     using CookWithMe.API.Models.Ingredients;
     using CookWithMeSystem.Models;
-
     using System.Collections.Generic;
-
     using AutoMapper;
     using CookWithMe.API.Models.Steps;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
 
     public class RecipeDetailsViewModel : IMapFrom<Recipe>, IHaveCustomMappings
     {
@@ -15,7 +15,18 @@
 
         public string Title { get; set; }
 
-        public string Description { get; set; }
+        public byte PreparationTime { get; set; }
+
+        public int CookTime { get; set; }
+
+        public int TotalTime { get; set; }
+
+        public string Directions { get; set; }
+
+        public byte ServingsCount { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DifficultyLevel Level { get; set; }
 
         public string Publisher { get; set; }
 

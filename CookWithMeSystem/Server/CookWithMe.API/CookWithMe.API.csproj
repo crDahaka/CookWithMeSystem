@@ -236,14 +236,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\IMapFrom.cs" />
-    <Compile Include="Infrastructure\JsonHelper.cs" />
     <Compile Include="Infrastructure\ValidationAttributes\CheckModelForNullAttribute.cs" />
     <Compile Include="Infrastructure\ValidationAttributes\ProcessExceptionFilterAttribute.cs" />
     <Compile Include="Infrastructure\ValidationAttributes\ProcessException.cs" />
