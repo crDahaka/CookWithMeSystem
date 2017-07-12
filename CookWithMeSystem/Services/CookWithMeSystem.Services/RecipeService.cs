@@ -61,6 +61,8 @@
                 Title = recipe.Title,
                 Directions = recipe.Directions,
                 PreparationTime = recipe.PreparationTime,
+                CookTime = recipe.CookTime,
+                TotalTime = recipe.PreparationTime + recipe.CookTime,
                 ServingsCount = recipe.ServingsCount,
                 Level = recipe.Level,
                 PublisherID = currentUser.Id,

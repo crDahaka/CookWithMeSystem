@@ -24,6 +24,10 @@
 
         public const int MinPassword = 6;
 
+        public const int MinCookTime = 5;
+
+        public const int MaxCookTime = 249;
+
         public const int MaxPassword = 25;
 
         public const int MaxFirstName = 50;

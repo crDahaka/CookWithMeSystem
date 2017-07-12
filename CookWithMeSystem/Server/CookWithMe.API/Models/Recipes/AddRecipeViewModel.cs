@@ -22,8 +22,12 @@
 
         [Required]
         [Range(ValidationConstants.MinPreparationTime, ValidationConstants.MaxPreparationTime)]
-        public int PreparationTime { get; set; }
+        public byte PreparationTime { get; set; }
 
+        [Required]
+        [Range(ValidationConstants.MinCookTime, ValidationConstants.MaxCookTime)]
+        public int CookTime { get; set; }
+        
         [Required]
         [Range(ValidationConstants.MinRecipeServings, ValidationConstants.MaxRecipeServings)]
         public byte ServingsCount { get; set; }
