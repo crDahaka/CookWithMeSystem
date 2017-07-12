@@ -14,6 +14,7 @@ namespace CookWithMe.API.App_Start
 
     using CookWithMeSystem.Data;
     using CookWithMeSystem.Common.Constants;
+    using System.Data.Entity;
 
     public static class NinjectConfig 
     {
@@ -69,6 +70,9 @@ namespace CookWithMe.API.App_Start
                 .Bind<ICookWithMeSystemDbContext>()
                 .To<CookWithMeSystemDbContext>()
                 .InRequestScope();
+
+            kernel.Bind<DbContext>().To<CookWithMeSystemDbContext>();
+            kernel.Bind<ICookWithMeSystemData>().To<CookWithMeSystemData>();
 
             kernel.Bind(typeof(IRepository<>)).To(typeof(EfGenericRepository<>));
 

@@ -1,6 +1,5 @@
 ﻿namespace CookWithMe.API.Controllers
 {
-    using CookWithMe.API.Infrastructure;
     using CookWithMe.API.Models;
     using CookWithMeSystem.Common.Constants;
     using CookWithMeSystem.Data;
@@ -17,25 +16,21 @@
     using System.Web.Http;
 
     [RoutePrefix("api/images")]
-    public class ImageController : ApiController
+    public class PictureController : BaseController
     {
-        private IRepository<Recipe> recipes;
-        private IRepository<Picture> pictures;
-
-        public ImageController(IRepository<Recipe> recipes, IRepository<Picture> pictures)
+        public PictureController(ICookWithMeSystemData data)
+            :base(data)
         {
-            this.recipes = recipes;
-            this.pictures = pictures;
         }
         
         [Route("upload/{recipeID:int}")]
         public HttpResponseMessage UploadImageToRecipe(int recipeID)
         {
-            var dbRecipe = this.recipes.GetById(recipeID);
+            var dbRecipe = this.Data.Recipes.GetById(recipeID);
 
             if (dbRecipe == null)
             {
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
+                return this.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
             }
 
             if (HttpContext.Current.Request.Files.AllKeys.Any())
@@ -60,15 +55,15 @@
                     };
 
                     dbRecipe.Picture = image;
-                    this.pictures.Add(image);
-                    this.pictures.SaveChanges();
+                    this.Data.Pictures.Add(image);
+                    this.Data.Pictures.SaveChanges();
                     
                 }
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, GlobalConstants.SuccessCreateMessage);
+                return this.CreateSerializedJsonResponse(HttpStatusCode.OK, GlobalConstants.SuccessCreateMessage);
             }
             else
             {
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotAcceptable, GlobalConstants.InvalidRequestFormat);
+                return this.CreateSerializedJsonResponse(HttpStatusCode.NotAcceptable, GlobalConstants.InvalidRequestFormat);
             }
             
         }
@@ -76,11 +71,11 @@
         [Route("{id:int}")]
         public HttpResponseMessage Get(int id)
         {
-            var dbPicture = this.pictures.GetById(id);
+            var dbPicture = this.Data.Pictures.GetById(id);
 
             if (dbPicture == null)
             {
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.PictureNotFoundErrorMessage });
+                return this.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.PictureNotFoundErrorMessage });
             }
 
             var result = new HttpResponseMessage();

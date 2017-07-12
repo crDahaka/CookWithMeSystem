@@ -9,27 +9,11 @@
     using AutoMapper;
     using System.Data.Entity.Validation;
 
-    public class RecipeService : IRecipeService
+    public class RecipeService : BaseService, IRecipeService
     {
-        private readonly IRepository<Recipe> recipes;
-        private readonly IRepository<User> users;
-        private readonly IRepository<Ingredient> ingredients;
-        private readonly IRepository<Step> steps;
-
-        /// <summary>
-        /// Recipe service constructor.
-        /// </summary>
-        /// <param name="recipesRepo"></param>
-        /// <param name="usersRepo"></param>
-        /// <param name="ingredientsRepo"></param>
-        /// <param name="stepsRepo"></param>
-        public RecipeService(
-            IRepository<Recipe> recipesRepo, IRepository<User> usersRepo, IRepository<Ingredient> ingredientsRepo, IRepository<Step> stepsRepo)
+        public RecipeService(ICookWithMeSystemData data)
+            :base(data)
         {
-            this.recipes = recipesRepo;
-            this.users = usersRepo;
-            this.ingredients = ingredientsRepo;
-            this.steps = stepsRepo;
         }
 
         /// <summary>
@@ -39,7 +23,7 @@
         /// <returns></returns>
         public Recipe GetById(int id)
         {
-            var dbRecipe = this.recipes.GetById(id);
+            var dbRecipe = this.Data.Recipes.GetById(id);
             
             return dbRecipe;
         }
@@ -54,7 +38,7 @@
         {
             if (page <= 0) page = 1;
 
-            return this.recipes
+            return this.Data.Recipes
                 .All()
                 .OrderByDescending(r => r.CreationDate)
                 .Skip((page - 1) * pageSize)
@@ -70,7 +54,7 @@
         /// <param name="steps"></param>
         public void Add(Recipe recipe, string publisherID, ICollection<Ingredient> ingredients, ICollection<Step> steps)
         {
-            var currentUser = this.users.All().FirstOrDefault(u => u.Id == publisherID);
+            var currentUser = this.Data.Users.All().FirstOrDefault(u => u.Id == publisherID);
 
             var newRecipe = new Recipe
             {
@@ -86,8 +70,8 @@
 
             try
             {
-                this.recipes.Add(newRecipe);
-                this.recipes.SaveChanges();
+                this.Data.Recipes.Add(newRecipe);
+                this.Data.Recipes.SaveChanges();
             }
             catch (DbEntityValidationException ex)
             {
@@ -110,8 +94,8 @@
 
             try
             {
-                this.recipes.Update(recipe);
-                this.recipes.SaveChanges();
+                this.Data.Recipes.Update(recipe);
+                this.Data.Recipes.SaveChanges();
 
             }
             catch (DbEntityValidationException ex)
@@ -131,8 +115,8 @@
 
             try
             {
-                this.recipes.Delete(recipe);
-                this.recipes.SaveChanges();
+                this.Data.Recipes.Delete(recipe);
+                this.Data.Recipes.SaveChanges();
             }
             catch (DbEntityValidationException ex)
             {
@@ -154,7 +138,7 @@
 
             foreach (var ingredient in ingredients)
             {
-                var existingIngredient = this.ingredients.All().FirstOrDefault(i => i.Name == ingredient.Name);
+                var existingIngredient = this.Data.Ingredients.All().FirstOrDefault(i => i.Name == ingredient.Name);
 
                 existingRecipe.Ingredients.Add(existingIngredient != null ? existingIngredient : Mapper.Map<Ingredient>(ingredient));
             }
@@ -164,7 +148,7 @@
 
             foreach (var step in steps)
             {
-                var existingStep = this.steps.All().FirstOrDefault(s => s.Action == step.Action);
+                var existingStep = this.Data.Steps.All().FirstOrDefault(s => s.Action == step.Action);
 
                 existingRecipe.Steps.Add(existingStep != null ? existingStep : Mapper.Map<Step>(step));
 

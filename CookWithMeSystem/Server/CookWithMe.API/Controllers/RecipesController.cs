@@ -13,45 +13,47 @@
     using System.Collections.Generic;
     using CookWithMe.API.Infrastructure;
     using CookWithMe.API.Models;
+    using CookWithMeSystem.Data;
 
     [RoutePrefix("api/recipes")]
-    public class RecipesController : ApiController
+    public class RecipesController : BaseController
     {
         private readonly IRecipeService recipeService;
 
-        public RecipesController(IRecipeService recipeService)
+        public RecipesController(ICookWithMeSystemData data, IRecipeService recipeService)
+            :base(data)
         {
             this.recipeService = recipeService;
         }
 
         public HttpResponseMessage GetAllRecipes()
         {
-            var recipes = Mapper.Map<ICollection<RecipeDetailsViewModel>>(this.recipeService.All());
-
-            return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, recipes);
+            var recipes = Mapper.Map<ICollection<RecipeDetailsViewModel>>(this.Data.Recipes.All());
+            
+            return this.CreateSerializedJsonResponse(HttpStatusCode.OK, recipes);
         }
 
         [HttpGet]
         [Route("all")]
-        public HttpResponseMessage GetAllRecipes (int page, int pageSize = GlobalConstants.DefaultPageSize)
+        public HttpResponseMessage GetAllRecipes(int page, int pageSize = GlobalConstants.DefaultPageSize)
         {
             var recipes = Mapper.Map<ICollection<RecipeDetailsViewModel>>(this.recipeService.All(page, pageSize));
 
-            return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, recipes);
+            return this.CreateSerializedJsonResponse(HttpStatusCode.OK, recipes);
         }
-        
+
         [HttpGet]
         [Route("details/{id:int}")]
         public HttpResponseMessage GetRecipeDetails(int id)
         {
-            var recipe =  Mapper.Map<RecipeDetailsViewModel>(this.recipeService.GetById(id));
+            var recipe = Mapper.Map<RecipeDetailsViewModel>(this.Data.Recipes.GetById(id));
 
             if (recipe == null)
             {
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
+                return this.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
             }
 
-            return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, recipe);
+            return this.CreateSerializedJsonResponse(HttpStatusCode.OK, recipe);
         }
 
         [Authorize]
@@ -62,7 +64,7 @@
         {
             if (User.Identity.GetUserId() == null)
             {
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.Unauthorized, null);
+                return this.CreateSerializedJsonResponse(HttpStatusCode.Unauthorized, null);
             }
 
             var mappedRecipe = Mapper.Map<AddRecipeViewModel, Recipe>(model);
@@ -70,7 +72,7 @@
             var mappedSteps = Mapper.Map<ICollection<Step>>(model.Steps);
 
             this.recipeService.Add(mappedRecipe, User.Identity.GetUserId(), mappedIngredients, mappedSteps);
-            return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, new { Message = GlobalConstants.SuccessCreateMessage });
+            return this.CreateSerializedJsonResponse(HttpStatusCode.OK, new { Message = GlobalConstants.SuccessCreateMessage });
         }
 
         [Authorize]
@@ -83,15 +85,15 @@
 
             if (recipe == null)
             {
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
+                return this.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
             }
-
-            var mappedRecipe = Mapper.Map<UpdateRecipeViewModel, Recipe>(model);
+            
+            Mapper.Map<UpdateRecipeViewModel, Recipe>(model, recipe);
             var mappedIngredients = Mapper.Map<ICollection<Ingredient>>(model.Ingredients);
             var mappedSteps = Mapper.Map<ICollection<Step>>(model.Steps);
 
-            this.recipeService.Update(mappedRecipe, mappedIngredients, mappedSteps);
-            return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, GlobalConstants.SuccessUpdateMessage);
+            this.recipeService.Update(recipe, mappedIngredients, mappedSteps);
+            return this.CreateSerializedJsonResponse(HttpStatusCode.OK, GlobalConstants.SuccessUpdateMessage);
         }
 
         [Authorize]
@@ -99,17 +101,17 @@
         [Route("delete/{id:int}")]
         public HttpResponseMessage DeleteRecipe(int id)
         {
-            var dbRecipe = this.recipeService.GetById(id);
+            var dbRecipe = this.Data.Recipes.GetById(id);
 
             if (dbRecipe == null)
             {
-                return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
+                return this.CreateSerializedJsonResponse(HttpStatusCode.NotFound, new ErrorViewModel { Message = GlobalConstants.RecipeNotFoundErrorMessage });
             }
 
             this.recipeService.Delete(id);
-            return JsonHelper.CreateSerializedJsonResponse(HttpStatusCode.OK, new { Message = GlobalConstants.SuccessDeleteMessage });
-            
+            return this.CreateSerializedJsonResponse(HttpStatusCode.OK, new { Message = GlobalConstants.SuccessDeleteMessage });
+
         }
-        
+
     }
 }

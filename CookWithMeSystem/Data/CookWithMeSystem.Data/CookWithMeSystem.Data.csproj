@@ -53,8 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CookWithMeSystemData.cs" />
     <Compile Include="CookWithMeSystemDbContext.cs" />
     <Compile Include="EfGenericRepository.cs" />
+    <Compile Include="ICookWithMeSystemData.cs" />
     <Compile Include="ICookWithMeSystemDbContext.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Migrations\Configuration.cs" />
