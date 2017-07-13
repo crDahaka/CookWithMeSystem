@@ -23,6 +23,11 @@
         public const string PictureNotFoundErrorMessage = "Picture could not be found.";
 
         public const string InvalidRequestFormat = "This request is not properly formatted.";
-        
+
+        public const string SuccessfulVoteMessage = "You have successfully voted for this recipe.";
+
+        public const string AlreadyVotedMessage = "You have already voted for this recipe.";
+
+
     }
 }

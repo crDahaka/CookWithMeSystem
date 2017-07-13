@@ -238,6 +238,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\PictureController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
+    <Compile Include="Controllers\VotesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
