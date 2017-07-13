@@ -59,7 +59,7 @@
             var newRecipe = new Recipe
             {
                 Title = recipe.Title,
-                Directions = recipe.Directions,
+                Overview = recipe.Overview,
                 PreparationTime = recipe.PreparationTime,
                 CookTime = recipe.CookTime,
                 TotalTime = recipe.PreparationTime + recipe.CookTime,

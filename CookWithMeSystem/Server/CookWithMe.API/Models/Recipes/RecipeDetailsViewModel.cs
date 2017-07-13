@@ -15,13 +15,13 @@
 
         public string Title { get; set; }
 
+        public string Overview { get; set; }
+
         public byte PreparationTime { get; set; }
 
         public int CookTime { get; set; }
 
         public int TotalTime { get; set; }
-
-        public string Directions { get; set; }
 
         public byte ServingsCount { get; set; }
 

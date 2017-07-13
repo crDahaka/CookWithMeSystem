@@ -1,16 +1,12 @@
 namespace CookWithMeSystem.Data.Migrations
 {
-    using CookWithMeSystem.Common;
     using CookWithMeSystem.Common.Constants;
     using CookWithMeSystem.Common.Generator;
     using CookWithMeSystem.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
     using System.Data.Entity.Migrations;
-    using System.IO;
     using System.Linq;
-    using System.Reflection;
 
     public sealed class Configuration : DbMigrationsConfiguration<CookWithMeSystemDbContext>
     {
@@ -62,7 +58,7 @@ namespace CookWithMeSystem.Data.Migrations
             {
                 FirstName = "Admin",
                 LastName = "AdminAdmin",
-                Email = "admin@myApp.com",
+                Email = "admin@gmail.com",
                 UserName = "Administrator"
             };
 
@@ -91,7 +87,7 @@ namespace CookWithMeSystem.Data.Migrations
                     var recipe = new Recipe
                     {
                         Title = this.random.RandomString(3, 20),
-                        Directions = this.random.RandomString(50, 1000),
+                        Overview = this.random.RandomString(50, 1000),
                         PreparationTime = (byte)this.random.RandomNumber(1, 249),
                         CookTime = this.random.RandomNumber(1, 249),
                         TotalTime = this.random.RandomNumber(40, 1000),

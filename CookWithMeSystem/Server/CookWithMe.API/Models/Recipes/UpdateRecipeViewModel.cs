@@ -16,8 +16,8 @@
         public string Title { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.MaxRecipeDirections, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinRecipeDirections)]
-        public string Directions { get; set; }
+        [StringLength(ValidationConstants.MaxRecipeOverview, ErrorMessage = ValidationConstants.ValidationErrorMessage, MinimumLength = ValidationConstants.MinRecipeOverview)]
+        public string Overview { get; set; }
 
         [Required]
         [Range(ValidationConstants.MinPreparationTime, ValidationConstants.MaxPreparationTime)]

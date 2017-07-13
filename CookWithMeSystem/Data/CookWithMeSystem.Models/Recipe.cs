@@ -7,7 +7,7 @@
     {
         public string Title { get; set; }
         
-        public string Directions { get; set; }
+        public string Overview { get; set; }
 
         public byte PreparationTime { get; set; }
 

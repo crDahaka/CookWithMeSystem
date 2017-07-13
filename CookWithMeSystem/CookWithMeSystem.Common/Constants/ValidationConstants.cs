@@ -4,7 +4,7 @@
     {
         public const int MinRecipeTitle = 3;
 
-        public const int MinRecipeDirections = 50;
+        public const int MinRecipeOverview = 50;
 
         public const int MinRecipeServings = 1;
 
@@ -36,7 +36,7 @@
 
         public const int MaxRecipeTitle = 50;
 
-        public const int MaxRecipeDirections = 1000;
+        public const int MaxRecipeOverview = 1000;
 
         public const int MaxIngredientName = 50;
 
