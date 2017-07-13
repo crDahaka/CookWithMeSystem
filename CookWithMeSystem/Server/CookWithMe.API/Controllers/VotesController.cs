@@ -22,7 +22,6 @@
         public HttpResponseMessage Vote(int id)
         {
             var userID = this.User.Identity.GetUserId();
-
             var dbRecipe = this.Data.Recipes.GetById(id);
             var canVote = !this.Data.Votes.All().Any(x => x.RecipeID == id && x.VotedByID == userID);
 
@@ -42,7 +41,6 @@
                 VotedByID = userID
             });
             
-
             this.Data.SaveChanges();
             return this.CreateSerializedJsonResponse(HttpStatusCode.OK, new { Message = GlobalConstants.SuccessfulVoteMessage });
         }
