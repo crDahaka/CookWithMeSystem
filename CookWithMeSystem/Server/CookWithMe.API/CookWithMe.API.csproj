@@ -252,6 +252,7 @@
     <Compile Include="Models\Account\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\Account\SetPasswordViewModel.cs" />
+    <Compile Include="Models\Comments\CommentViewModel.cs" />
     <Compile Include="Models\Comments\PostCommentViewModel.cs" />
     <Compile Include="Models\ErrorViewModel.cs" />
     <Compile Include="Models\Ingredients\IngredientViewModel.cs" />
